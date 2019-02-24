@@ -1,0 +1,76 @@
+body.is-trimmed {
+  overflow: hidden;
+}
+body .mod_pad-show {
+  display: none;
+}
+body .mod_mob-show {
+  display: none;
+}
+body .mod_m-top-10 {
+  margin-top: 10px;
+}
+body .mod_m-top-15 {
+  margin-top: 15px;
+}
+body .mod_m-top-20 {
+  margin-top: 20px;
+}
+body .mod_m-top-30 {
+  margin-top: 30px;
+}
+body .mod_m-btm-10 {
+  margin-bottom: 10px;
+}
+body .mod_m-btm-15 {
+  margin-bottom: 15px;
+}
+body .mod_m-btm-20 {
+  margin-bottom: 20px;
+}
+body .mod_m-btm-30 {
+  margin-bottom: 30px;
+}
+body .mod_m-btm-50 {
+  margin-bottom: 50px;
+}
+body .mod_txt-cn {
+  text-align: center;
+}
+body .mod_txt-le {
+  text-align: left;
+}
+body .mod_txt-rt {
+  text-align: right;
+}
+body .mod_txt-jf {
+  text-align: justify;
+}
+body .mod_fl-left {
+  float: left;
+}
+body .mod_fl-right {
+  float: right;
+}
+body .mod_bg-gray {
+  background-color: #f9f7f3;
+}
+/* ---------- ADAPTIVE < 1024 ------------------------------------------------*/
+@media (max-width: 1010px) {
+  body .mod_pad-hide {
+    display: none;
+  }
+  body .mod_pad-show {
+    display: block;
+  }
+}
+/* ---------- ADAPTIVE < 768 ------------------------------------------------*/
+@media (max-width: 768px) {
+  body .mod_mob-hide {
+    display: none;
+  }
+  body .mod_mob-show {
+    display: block;
+  }
+}
+/*# sourceMappingURL=modifiers.css.map */

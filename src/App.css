@@ -1,0 +1,25 @@
+body.is-trimmed {
+  overflow: hidden;
+}
+body.is-trimmed .site-wrapper {
+  filter: blur(5px);
+}
+body.is-cut {
+  overflow: hidden;
+}
+body.no-start-animations * {
+  animation-duration: 0s !important;
+  -webkit-animation-duration: 0s !important;
+  transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+}
+.site-wrapper {
+  display: flex;
+  background: grey;
+  position: relative;
+  flex-direction: column;
+  min-height: 100%;
+  min-width: 320px;
+  overflow: hidden;
+  transition: opacity 0.3s;
+}
+/*# sourceMappingURL=App.css.map */
