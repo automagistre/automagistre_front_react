@@ -1,0 +1,26 @@
+/*--------------------- BLOCKS: Facts list -----------------------------------*/
+.facts {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0;
+  list-style: none;
+}
+.facts__item {
+  flex: 0 0 auto;
+  text-align: center;
+}
+.facts__val {
+  color: #cc1612;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 70px;
+  overflow: hidden;
+}
+.facts__val.is-hidden {
+  opacity: 0;
+}
+.facts__txt {
+  font-size: 18px;
+}
+/*# sourceMappingURL=Facts.css.map */
