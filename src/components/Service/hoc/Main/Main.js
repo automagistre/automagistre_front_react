@@ -3,6 +3,7 @@ import './Main.css'
 import IntroSec from "../../components/Sections/IntroSec/IntroSec";
 import FeaturesSec from "../../components/Sections/FeaturesSec/FeaturesSec";
 import GallerySec from "../../components/Sections/GallerySec/GallerySec";
+import ServicesSec from "../../components/Sections/ServicesSec/ServicesSec";
 
 const Main = () => {
     return (
@@ -10,6 +11,7 @@ const Main = () => {
             <IntroSec />
             <FeaturesSec />
             <GallerySec />
+            <ServicesSec />
         </main>
     )
 };

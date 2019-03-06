@@ -13,7 +13,7 @@ import ImageItem from "./ImageItem/ImageItem";
 class GallerySec extends React.Component {
     IMG_DIR = './images/sec-gallery/';
 
-    inintScroll_X = ( $elem ) => {
+    initScroll_X = ($elem ) => {
         $elem.mCustomScrollbar({
             axis: "x",
             scrollButtons: { enable: false },
@@ -29,11 +29,11 @@ class GallerySec extends React.Component {
         let $scroll_X = $(".js-scroll-x");
         if ( $scroll_X.length ) {
 
-            this.inintScroll_X( $scroll_X );
+            this.initScroll_X( $scroll_X );
 
             $(window).resize(() => {
                 $scroll_X.mCustomScrollbar("destroy");
-                this.inintScroll_X($scroll_X);
+                this.initScroll_X($scroll_X);
             });
         }
     }
@@ -72,5 +72,6 @@ class GallerySec extends React.Component {
     }
 
 
-};
+}
+
 export default GallerySec
