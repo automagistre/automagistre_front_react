@@ -50,6 +50,7 @@
     "react-dom": "^16.7.0",
     "react-medium-image-zoom": "^3.0.15",
     "react-odometerjs": "^2.1.1",
+    "react-slick": "^0.23.2",
     "react-thumbnail-zoom": "^1.0.2",
     "react-visibility-sensor": "^5.0.2",
     "resolve": "1.8.1",

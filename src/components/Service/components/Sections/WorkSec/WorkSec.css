@@ -1,0 +1,362 @@
+/*--------------------- SECTION: Work ----------------------------------------*/
+.sec-work {
+  position: relative;
+  background-color: #f5f6f8;
+  overflow: hidden;
+}
+.sec-work__front {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  min-height: 100vh;
+  padding: 50px 0;
+}
+.sec-work__title {
+  margin: 0 0 40px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 52px;
+}
+.sec-work__wrap {
+  width: 100%;
+  max-width: 1560px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.sec-work__row {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.sec-work__col-lt {
+  flex: 0 0 480px;
+  max-width: 480px;
+  margin-left: 180px;
+}
+.sec-work__col-rt {
+  position: relative;
+  flex: 0 0 920px;
+  min-width: 920px;
+}
+.sec-work__menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: no-repeat 0 50% url("../../../../../img/backgrounds/bg_sec-work.svg");
+  background-size: 130px 650px;
+}
+.sec-work__menu-item {
+  height: 90px;
+  margin-bottom: 35px;
+  padding: 30px 0;
+}
+.sec-work__menu-item:last-child {
+  margin-bottom: 0;
+}
+.sec-work__btn {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  padding-left: 65px;
+  font-size: 24px;
+  line-height: 30px;
+}
+.sec-work__btn:hover {
+  color: #cc1612;
+}
+.sec-work__btn span {
+  display: block;
+  transform-origin: 0 50%;
+  transition: transform 0.6s;
+}
+.sec-work__btn:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  margin: -35px 0 0 -35px;
+  background-color: #cc1612;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px;
+  border-radius: 50%;
+  transform: scale(0, 0);
+  transition: transform 0.6s;
+}
+.sec-work__btn.is-active {
+  color: #cc1612;
+}
+.sec-work__btn.is-active span {
+  transform: scale(1.2, 1.2);
+}
+.sec-work__btn.is-active:before {
+  transform: none;
+  box-shadow: 0 0 0 10px rgba(204, 22, 18, 0.5);
+  transition: transform 0.6s, box-shadow 0.3s ease 0.6s;
+}
+.sec-work__btn_service {
+  margin-left: 102px;
+}
+.sec-work__btn_service:before {
+  background-image: url("../../../../../img/icons/icon_starter_white.svg");
+}
+.sec-work__btn_suspend {
+  margin-left: 36px;
+}
+.sec-work__btn_suspend:before {
+  background-image: url("../../../../../img/icons/icon_chassis_white.svg");
+}
+.sec-work__btn_braking {
+  margin-left: 5px;
+}
+.sec-work__btn_braking:before {
+  background-image: url("../../../../../img/icons/icon_brake-disk_white.svg");
+}
+.sec-work__btn_engine {
+  margin-left: 7px;
+}
+.sec-work__btn_engine:before {
+  background-image: url("../../../../../img/icons/icon_motor_white.svg");
+}
+.sec-work__btn_control {
+  margin-left: 42px;
+}
+.sec-work__btn_control:before {
+  background-image: url("../../../../../img/icons/icon_wheel_white.svg");
+}
+.sec-work__btn_starter {
+  margin-left: 116px;
+}
+.sec-work__btn_starter:before {
+  background-image: url("../../../../../img/icons/icon_key_white.svg");
+}
+.sec-work__slider {
+  position: relative;
+}
+.sec-work__slider .slick-dots {
+  left: 280px;
+  transform: none;
+}
+.sec-work__slider .slick-dots li {
+  margin: 0 8px;
+}
+.sec-work__slider .slick-dots button {
+  width: 20px;
+  height: 20px;
+}
+.sec-work__slider .slick-dots button:before {
+  width: 12px;
+  height: 12px;
+}
+.sec-work__slide {
+  position: relative;
+  height: 640px;
+  overflow: hidden;
+}
+.sec-work__slide-front {
+  opacity: 0.1;
+  transform: translate(50px, 50px);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  left: 20px;
+  filter: blur(15px);
+  transition: all 0.6s;
+}
+.sec-work__slide-back {
+  opacity: 0.1;
+  transform: translate(-50px, -50px);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  filter: blur(15px);
+  transition: all 0.6s;
+}
+.sec-work__slide-big {
+  display: block;
+  flex: 0 0 700px;
+  width: 700px;
+  height: 480px;
+  border-radius: 0 40px 40px 40px;
+  box-shadow: 15px 15px 40px -10px rgba(0, 0, 0, 0.25);
+}
+.sec-work__slide-min {
+  display: block;
+  width: 440px;
+  height: 320px;
+  border-radius: 0 40px 40px 40px;
+}
+.sec-work__slide-note {
+  opacity: 0;
+  transform: translateY(-45px);
+  position: relative;
+  flex: 0 0 auto;
+  margin: 45px 0 0 40px;
+  font-size: 18px;
+  line-height: 24px;
+  writing-mode: vertical-lr;
+  letter-spacing: 0.1em;
+  transition: all 0.6s;
+}
+.sec-work__slide-note:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50px;
+  right: 50%;
+  bottom: 130px;
+  width: 2px;
+  margin-right: -1px;
+  background-color: #425760;
+}
+.sec-work__slide-note span {
+  display: inline-block;
+  position: relative;
+  padding: 10px 0;
+  color: #425760;
+  background-color: #f5f6f8;
+  border-radius: 12px;
+  z-index: 1;
+}
+.sec-work__count {
+  position: absolute;
+  left: -30px;
+  bottom: -80px;
+  padding: 0 30px;
+  color: #f4f5f7;
+  font-size: 250px;
+  font-weight: 700;
+  line-height: 310px;
+  text-shadow: 0 5px 40px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  overflow: hidden;
+}
+.sec-work__count .odometer-digit:first-child {
+  display: none;
+}
+.sec-work__count .odometer-digit-spacer {
+  width: 130px;
+}
+.sec-work__count .odometer-digit-inner {
+  width: 130px;
+  overflow: visible;
+}
+.sec-work__count .odometer-ribbon {
+  width: 130px;
+}
+.sec-work__count .odometer-value {
+  width: 130px;
+}
+.slick-active .sec-work__slide .sec-work__slide-back {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 0.9s;
+}
+.slick-active .sec-work__slide .sec-work__slide-front {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 0.5s;
+}
+.slick-active .sec-work__slide .sec-work__slide-note {
+  opacity: 1;
+  transform: none;
+  transition-delay: 1.2s;
+}
+/* ---------- ADAPTIVE < 1800 ------------------------------------------------*/
+@media (max-width: 1800px) {
+  .sec-work__col-lt {
+    margin-left: 0;
+  }
+}
+/* ---------- ADAPTIVE < 1680 ------------------------------------------------*/
+@media (max-width: 1680px) {
+  .sec-work__wrap {
+    max-width: 1320px;
+  }
+  .sec-work__col-lt {
+    flex-basis: 360px;
+    max-width: 360px;
+  }
+  .sec-work__menu {
+    margin-left: 35px;
+    background-image: none;
+  }
+  .sec-work__menu-item {
+    margin-bottom: 0;
+  }
+  .sec-work__btn {
+    padding-left: 55px;
+  }
+  .sec-work__btn_service,
+  .sec-work__btn_suspend,
+  .sec-work__btn_braking,
+  .sec-work__btn_engine,
+  .sec-work__btn_control,
+  .sec-work__btn_starter {
+    margin-left: 0;
+  }
+}
+/* ---------- ADAPTIVE < 1320 ------------------------------------------------*/
+@media (max-width: 1320px) {
+  .sec-work__wrap {
+    max-width: 980px;
+  }
+  .sec-work__col-lt {
+    flex-basis: 250px;
+    max-width: 250px;
+  }
+  .sec-work__col-rt {
+    flex-basis: 690px;
+    min-width: 690px;
+  }
+  .sec-work__menu {
+    margin-left: 15px;
+  }
+  .sec-work__menu-item {
+    height: 60px;
+    padding: 15px 0;
+  }
+  .sec-work__btn {
+    padding-left: 45px;
+    font-size: 20px;
+  }
+  .sec-work__btn.is-active span {
+    transform: none;
+  }
+  .sec-work__btn:before {
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 -25px;
+  }
+  .sec-work__slide {
+    height: 540px;
+  }
+  .sec-work__slide-big {
+    flex-basis: 560px;
+    width: 560px;
+    height: 384px;
+  }
+}
+/* ---------- ADAPTIVE < 1024 ------------------------------------------------*/
+@media (max-width: 1024px) {
+  .sec-work__title {
+    font-size: 32px;
+    line-height: 42px;
+  }
+}
+/* ---------- ADAPTIVE < 760 -------------------------------------------------*/
+@media (max-width: 760px) {
+  .sec-work {
+    display: none;
+  }
+}
+/*# sourceMappingURL=WorkSec.css.map */

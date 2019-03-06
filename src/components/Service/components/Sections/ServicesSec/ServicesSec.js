@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {data} from '../../../../../vars/texts/sec_service/sec_sevice'
+import {data} from '../../../../../vars/texts/sec_data/sec_sevice'
 import './ServicesSec.css'
 
 import serviceImg1 from '../../../../../images/sec-services/service_01.png'
