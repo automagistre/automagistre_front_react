@@ -1,0 +1,43 @@
+.mobmenu-btn {
+  position: relative;
+  float: right;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 1;
+}
+.mobmenu-btn span {
+  display: block;
+  width: 30px;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  transition: transform 0.5s ease-in-out, top 0.25s ease-in-out 0.5s, opacity 0.25s ease-in-out 0.5s;
+  transform-origin: center;
+}
+.mobmenu-btn span._top {
+  top: 5px;
+}
+.mobmenu-btn span._middle {
+  top: 13px;
+}
+.mobmenu-btn span._bottom {
+  top: 21px;
+}
+.mobmenu-btn.is-open span {
+  height: 3px;
+  transition: transform 0.5s ease-in-out 0.3s, top 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+.mobmenu-btn.is-open span._top,
+.mobmenu-btn.is-open span._middle {
+  top: 12px;
+  transform: rotate(135deg);
+}
+.mobmenu-btn.is-open span._middle {
+  opacity: 0;
+}
+.mobmenu-btn.is-open span._bottom {
+  top: 12px;
+  transform: rotate(225deg);
+}
+/*# sourceMappingURL=MobMenu.css.map */
