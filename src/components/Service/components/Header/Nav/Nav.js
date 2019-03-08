@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Header.css'
+import '../Header.less'
 import {carManufactures} from '../../../../../vars/manufactures'
 
 class Nav extends React.Component {

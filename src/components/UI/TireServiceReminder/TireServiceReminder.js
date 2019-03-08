@@ -1,5 +1,5 @@
 import React from 'react'
-import './TireServiceReminder.css'
+import './TireServiceReminder.less'
 import ReminderTirePic from '../../../img/reminder_tire.png'
 
 

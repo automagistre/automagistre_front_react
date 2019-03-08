@@ -1,6 +1,6 @@
 import React from 'react'
-import './jquery.mCustomScrollbar.css'
-import './GallerySec.css'
+import './jquery.mCustomScrollbar.less'
+import './GallerySec.less'
 import {companyAbout} from "../../../../../vars/company";
 import $ from 'jquery'
 import 'malihu-custom-scrollbar-plugin'

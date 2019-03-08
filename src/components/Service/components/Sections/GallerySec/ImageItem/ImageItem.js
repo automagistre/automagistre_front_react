@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Zoom from 'react-medium-image-zoom'
-import '../block_zoom-pop.css'
+import '../block_zoom-pop.less'
 
 const ImageItem = props => {
     const clsImgSize = 'sec-gallery__cell-' + props.size;

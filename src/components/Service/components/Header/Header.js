@@ -1,5 +1,5 @@
 import React from 'react'
-import './Header.css'
+import './Header.less'
 import Nav from "./Nav/Nav";
 import DropMenu from "../DropMenu/DropMenu"
 import Logo from "./Logo/Logo";

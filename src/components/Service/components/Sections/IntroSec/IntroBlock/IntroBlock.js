@@ -1,5 +1,5 @@
 import React from "react"
-import "../../block_panel.css"
+import "../../block_panel.less"
 
 const IntroBlock = (props) => {
     const cls = "panel sec-intro__panel sec-intro__" +props.data.cls;

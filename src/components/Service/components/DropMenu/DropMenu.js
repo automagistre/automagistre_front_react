@@ -1,6 +1,6 @@
 import React from 'react';
-import '../Header/Header.css'
-import '../Footer/Footer.css'
+import '../Header/Header.less'
+import '../Footer/Footer.less'
 import {carManufactures} from '../../../../vars/manufactures'
 
 class DropMenu extends React.Component {

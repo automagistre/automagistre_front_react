@@ -1,6 +1,6 @@
 import React from 'react';
-import '../Header.css'
-import './MobMenu.css'
+import '../Header.less'
+import './MobMenu.less'
 import {companyContacts} from '../../../../../vars/company'
 
 const MobMenu = (props) => {
