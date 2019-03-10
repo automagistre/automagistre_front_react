@@ -7,6 +7,7 @@ import ServicesSec from "../../components/Sections/ServicesSec/ServicesSec";
 import WorkSec from "../../components/Sections/WorkSec/WorkSec";
 import ExpertSec from "../../components/Sections/ExpertSec/ExpertSec";
 import FaqSec from "../../components/Sections/FaqSec/FaqSec";
+import MapSec from "../../components/Sections/MapSec/MapSec";
 
 const Main = () => {
     return (
@@ -17,7 +18,8 @@ const Main = () => {
             <ServicesSec />
             <WorkSec />
             <ExpertSec />
-            <FaqSec/>
+            <FaqSec />
+            <MapSec />
         </main>
     )
 };
