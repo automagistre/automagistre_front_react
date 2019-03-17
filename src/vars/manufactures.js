@@ -1,22 +1,22 @@
 export const carManufactures = [
     {
         name: 'Nissan',
-        icon: 'icon-nis',
+        cls: 'nis',
         carImg: ''
     },
     {
         name: 'Infiniti',
-        icon: 'icon-inf',
+        cls: 'inf',
         carImg: ''
     },
     {
         name: 'Toyota',
-        icon: 'icon-toy',
+        cls: 'toy',
         carImg: ''
     },
     {
         name: 'Lexus',
-        icon: 'icon-lex',
+        cls: 'lex',
         carImg: ''
     }
 ];

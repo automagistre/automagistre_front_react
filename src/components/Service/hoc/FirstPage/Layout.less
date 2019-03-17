@@ -1,0 +1,22 @@
+@import "../../../../vars/vars";
+
+.site {
+    &-side {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY( -50% );
+    z-index: 5;
+  }
+
+  &-main {
+    display: block;
+    flex: 1 0 auto;
+  }
+
+  &-footer {
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #fff;
+  }
+}

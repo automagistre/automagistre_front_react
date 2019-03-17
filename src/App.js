@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.less';
 import Layout from './components/Service/hoc/Layout/Layout';
+import FirstPage from "./components/Service/hoc/FirstPage/Layout";
 
 class App extends Component {
   componentDidMount() {
@@ -10,8 +11,8 @@ class App extends Component {
 
   render() {
     return (
-        <Layout>
-        </Layout>
+        <FirstPage >
+        </FirstPage>
     );
   }
 }
