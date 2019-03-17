@@ -1,6 +1,6 @@
 import React from 'react'
-import '../block_panel.css'
-import './FeaturesSec.css'
+import '../block_panel.less'
+import './FeaturesSec.less'
 import {data} from '../../../../../vars/texts/sec_data/sec_features_data'
 
 import ltImgMim from  '../../../../../img/sec-features/lt-img_min.png';

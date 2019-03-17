@@ -1,5 +1,5 @@
 import React from 'react'
-import './Footer.css'
+import './Footer.less'
 import SpaceWellLogo from '../../../../img/logo_space-well_red.svg'
 import MagistrLogoDark from '../../../../img/logo_magistr_dark.svg'
 import DropMenu from "../DropMenu/DropMenu";

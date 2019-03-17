@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Header.css'
+import '../Header.less'
 import {companyNameRu} from '../../../../../vars/company'
 
 import logoDark from '../../../../../img/logo_magistr_dark.svg'

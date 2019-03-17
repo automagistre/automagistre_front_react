@@ -17,3 +17,16 @@ export const companyAbout = {
 '            Москве, мы готовы взяться за любую модель, но отдаем предпочтение\n' +
 '            японским.'
 }
+
+export const services = [
+    {
+        name: 'Автосервис',
+        link: 'service',
+        icon: 'icon-gear'
+    },
+    {
+        name: 'Магазин запчастей',
+        link: 'market',
+        icon: 'icon-belt'
+    }
+]

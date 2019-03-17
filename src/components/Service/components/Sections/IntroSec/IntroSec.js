@@ -1,6 +1,6 @@
 import React from 'react'
-import '../block_panel.css'
-import './IntroSec.css'
+import '../block_panel.less'
+import './IntroSec.less'
 import {data} from '../../../../../vars/texts/sec_data/sec_intro_data'
 import IntroBlock from "./IntroBlock/IntroBlock";
 

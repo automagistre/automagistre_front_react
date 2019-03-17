@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import './slick-slider.css'
-import './ExpertSec.css'
+import './slick-slider.less'
+import './ExpertSec.less'
 import './modal-video.scss'
 
 import Slick from 'react-slick'

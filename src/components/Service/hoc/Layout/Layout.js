@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import './Layout.css'
-import './btn.css'
+import './Layout.less'
+import './btn.less'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import SideBar from "../../../UI/Sidebar/Sidebar";

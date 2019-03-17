@@ -1,11 +1,11 @@
 import React from 'react';
-import '../Header.css'
+import '../Header.less'
 import {carManufactures} from '../../../../../vars/manufactures'
 
 class Nav extends React.Component {
     renderCarLinks = links => links.map((value, key) => {
         return (
-            <a key={key} className="sh-mob__link" href="#">Клубный автосервис: {value}</a>
+            <a key={key} className="sh-mob__link" href="#">Клубный автосервис: {value.name}</a>
         )
     });
 
