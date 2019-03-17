@@ -4,7 +4,7 @@ import '../Header.less'
 import {services} from "../../../../../vars/company";
 
 class Switch extends React.Component {
-    links = servises
+    links = services
     renderLinks = () => {
         return(
             this.links.map((value, index) => {
