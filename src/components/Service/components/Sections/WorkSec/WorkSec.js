@@ -6,7 +6,7 @@ import Slick from 'react-slick'
 import Odometer from 'react-odometerjs'
 
 class WorkSec extends Component {
-    IMG_DIR = 'images/sec-work/'
+    IMG_DIR = '/images/sec-work/'
     state = {
         activeBlock:0
     }

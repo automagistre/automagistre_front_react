@@ -37,7 +37,7 @@ class ExpertSec extends Component {
         isOpen: false,
         currentVideo: 0
     }
-    IMG_DIR = "images/sec-expert/"
+    IMG_DIR = "/images/sec-expert/"
 
     renderNav = data => data.map((value, key) => {
         return (

@@ -11,7 +11,7 @@ import ImageItem from "./ImageItem/ImageItem";
 
 
 class GallerySec extends React.Component {
-    IMG_DIR = './images/sec-gallery/';
+    IMG_DIR = '/images/sec-gallery/';
 
     initScroll_X = ($elem ) => {
         $elem.mCustomScrollbar({
