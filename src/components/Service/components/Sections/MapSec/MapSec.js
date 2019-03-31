@@ -20,8 +20,7 @@ const MapSec = () => {
         <section className="sec-map js-sec-scroll">
             <YMaps version={2.1}>
                 <Map defaultState={{ center: point, zoom: 17.46 }}
-                     className="sec-map__back"
-                     scroll={false} >
+                     className="sec-map__back">
                     <GeoObject
                         geometry={{
                             type: 'Point',

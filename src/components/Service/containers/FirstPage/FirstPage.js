@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import './Layout.less'
-// import './btn.less'
+import './FirstPage.less'
 
 import SelectModel from "../../../UI/SelectModel/SelectModel";
 

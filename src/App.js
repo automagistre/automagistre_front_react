@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.less';
 import Layout from './components/Service/hoc/Layout/Layout';
-import FirstPage from "./components/Service/hoc/FirstPage/Layout";
+import FirstPage from "./components/Service/containers/FirstPage/FirstPage";
+import {Route, Switch} from 'react-router-dom'
+import Service from "./components/Service/Service";
 
 class App extends Component {
   componentDidMount() {
@@ -11,8 +13,12 @@ class App extends Component {
 
   render() {
     return (
-        <FirstPage >
-        </FirstPage>
+        <Layout >
+          <Switch>
+            <Route path="/service" component={Service}/>
+            <Route path="/" component={FirstPage}/>
+          </Switch>
+        </Layout>
     );
   }
 }

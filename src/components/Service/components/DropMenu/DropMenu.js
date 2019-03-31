@@ -13,11 +13,11 @@ class DropMenu extends React.Component {
             if (place === 'Footer'){
                 cls.push('sf-drop__link');
             }
-            if (value === 'Nissan'){
+            if (value.name === 'Nissan'){
                 cls.push('is-active')
             }
             return (
-                <a key={key} className={ cls.join(' ') } href="#">{ value }</a>
+                <a key={key} className={cls.join(' ')} href="#">{ value.name }</a>
             )
         })
     }
@@ -28,9 +28,9 @@ class DropMenu extends React.Component {
         if (this.props.place === 'Footer')
             cls = 'sf';
         return (
-            <div className={`${cls}-drop`}>
-                <div className={`${cls}-drop__note`}>Клубный автосервис:</div>
-                <nav className={`${cls}-drop__links`}>
+            <div className={cls + "-drop"}>
+                <div className={ cls + "-drop__note" }>Клубный автосервис:</div>
+                <nav className={ cls +  "-drop__links"}>
                     { this.renderLinks(carManufactures, this.props.place) }
                 </nav>
             </div>
