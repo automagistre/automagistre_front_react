@@ -185,8 +185,10 @@
                 &-logo {
                     transform: translateY( -100px );
                     opacity: 0;
-                }.icon-gear { background-image: data-uri("@{img-dir}icons/icon_gear_white.svg") }
-.icon-belt { background-image: data-uri("@{img-dir}icons/icon_belt_white.svg") }
+                }
+
+                .icon-gear { background-image: data-uri("@{img-dir}icons/icon_gear_white.svg") }
+                .icon-belt { background-image: data-uri("@{img-dir}icons/icon_belt_white.svg") }
 
                 &-btns {
                     opacity: 1;
@@ -235,7 +237,8 @@
     }
 
     &__slider {
-        position: relative;
+        position: absolute;
+        top: -1px;
         height: 100%;
         width: 100%;
 

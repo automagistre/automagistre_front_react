@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 
-import './slick-slider.less'
 import './SelectModel.less'
+import './slick-slider.less'
 
 import Slider from 'react-slick'
 import {carManufactures} from "../../../vars/manufactures";
 import {services} from "../../../vars/company";
+import {NavLink} from "react-router-dom";
 
 function CustomArrow(props) {
     const { className, onClick } = props;
@@ -17,22 +18,13 @@ function CustomArrow(props) {
 class SelectModel extends Component {
     carManufactures = carManufactures
     services = services
-    state = {
-        friezeChoice: false
-    }
-
-    friezeChoiceToggle = () => {
-        this.setState({
-            friezeChoice: !this.state.friezeChoice
-        })
-    }
 
     renderServices = links => links.map((value , key) =>{
         return (
-            <a className="btn btn_shmatn sec-start__btn" key={key} href="#">
+            <NavLink to={value.url} className="btn btn_shmatn sec-start__btn" style={ {display: "block", margin: "40px 0"}} key={key} href="#">
                 <i className={value.icon} />
                 {value.name}
-            </a>
+            </NavLink>
         )
     } )
 
@@ -49,7 +41,7 @@ class SelectModel extends Component {
                     </div>
                 </div>
                 <div className="sec-start__slide-btm">
-                    <a className="btn btn_big sec-start__slide-btn" onClick={this.friezeChoiceToggle} role="button">Выбрать {value.name}</a>
+                    <a className="btn btn_big sec-start__slide-btn" onClick={this.props.changeStep} role="button">Выбрать {value.name}</a>
                 </div>
             </div>
         )
@@ -63,15 +55,16 @@ class SelectModel extends Component {
             )
         })
         brands.push(
-                <a className="sec-start__nav-link icon-all" key={brands.length + 1} href="/09_All-brands.html">
+                <NavLink className="sec-start__nav-link icon-all" key={brands.length + 1} to="/all_brands">
                     <div className="sec-start__nav-tooltip" data-text="Японские и&nbsp;корейские машины"/>
-                </a>
+                </NavLink>
         )
         return brands
     }
 
     render() {
         const slickOptions = {
+            className: "sec-start__slider",
             arrows: true,
             dots: false,
             infinite: true,
@@ -88,18 +81,18 @@ class SelectModel extends Component {
             // beforeChange: (current, next) => this.setState({ activeSlide: next })
         }
         let cls = "sec-start__select "
-        if (this.state.friezeChoice) {
+        if (this.props.frieze) {
             cls += "is-frozen"
         }
         return (
                 <div className="sec-start__body">
                         <div className={cls}>
                         <a className="btn btn_gray btn_arrow-lt sec-start__back" role="button"
-                           onClick={this.friezeChoiceToggle}>
+                           onClick={this.props.changeStep}>
                             Назад
                         </a>
                         <h1 className="sec-start__title">Выберите <br /> интересующее направление:</h1>
-                        <Slider className="sec-start__slider" {...slickOptions}
+                        <Slider  {...slickOptions}
                                 ref={slider => (this.slider = slider)}>
                             {this.renderCarBlock(this.carManufactures)}
                         </Slider>

@@ -20,13 +20,15 @@ export const companyAbout = {
 
 export const services = [
     {
-        name: 'Автосервис',
+        name: 'Автосервис в москве',
         link: 'service',
-        icon: 'icon-gear'
+        icon: 'icon-gear',
+        url:  'service'
     },
     {
         name: 'Магазин запчастей',
         link: 'market',
-        icon: 'icon-belt'
+        icon: 'icon-belt',
+        url:  'market'
     }
 ]
