@@ -18,6 +18,7 @@ export const companyAbout = {
 '            японским.'
 }
 
+
 export const services = [
     {
         name: 'Автосервис в москве',
@@ -32,3 +33,5 @@ export const services = [
         url:  'market'
     }
 ]
+
+export const confidentialCheckBox = 'Lorem ipsum dolor sit amet, consec tetur adipisi cing elit At, exerci tati onem.'

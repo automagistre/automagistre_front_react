@@ -1,7 +1,8 @@
 import React from 'react'
 import '../block_panel.less'
 import './FeaturesSec.less'
-import {data} from '../../../../../vars/texts/sec_data/sec_features_data'
+import {data} from '../../../../../vars/texts/sec_data/sec_features'
+
 
 import ltImgMim from  '../../../../../img/sec-features/lt-img_min.png';
 import ltImgBig from  '../../../../../img/sec-features/lt-img_big.png';
@@ -48,6 +49,16 @@ class FeaturesSec extends React.Component{
                         <ul className="sec-features__list">
                             { this.renderFutureItems(data) }
                         </ul>
+                        {this.props.offerButton &&
+                            <div className="sec-features__get">
+                                <a className="btn" href="#">Записаться на бесплатную диагностику</a>
+                            </div>
+                        }
+                        {this.props.children &&
+                            <div className="sec-features__offer">
+                                {this.props.children}
+                            </div>
+                        }
                     </div>
                 </div>
             </section>

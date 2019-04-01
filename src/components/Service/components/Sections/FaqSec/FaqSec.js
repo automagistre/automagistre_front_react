@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './FaqSec.less'
 import {data} from '../../../../../vars/texts/sec_data/sec_faq'
-import EmailForm from "../../../../UI/EmailForm/EmailForm";
+import EmailForm from "../../../../UI/Forms/EmailForm";
 import woman from '../../../../../img/sec-faq/woman.png'
 
 class FaqSec extends Component {

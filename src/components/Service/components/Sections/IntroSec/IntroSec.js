@@ -1,7 +1,7 @@
 import React from 'react'
 import '../block_panel.less'
 import './IntroSec.less'
-import {data} from '../../../../../vars/texts/sec_data/sec_intro_data'
+import {data} from '../../../../../vars/texts/sec_data/sec_intro'
 import IntroBlock from "./IntroBlock/IntroBlock";
 
 const IntroSec = () => {

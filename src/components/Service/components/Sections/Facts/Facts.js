@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Facts.less"
 import './odometer.less'
-import {data} from '../../../../../vars/texts/sec_data/facts'
+import {data} from '../../../../../vars/texts/UI/facts'
 import Odometer from 'react-odometerjs'
 import VisibilitySensor from 'react-visibility-sensor'
 
