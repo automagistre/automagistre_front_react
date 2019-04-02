@@ -17,7 +17,7 @@ class SubscribeForm extends Component{
                 <input className="subscribe__date js-datepicker-limited" type="text"
                        readOnly placeholder="Выберите дату" /><div className="subscribe__agree">
                 <label className="subscribe__check">
-                    <input type="checkbox" checked={this.state.checked} />
+                    <input type="checkbox" defaultChecked={this.state.checked} />
                     <span onClick={() => this.setState({checked:!this.state.checked})}/>
                 </label>
                 <div className="subscribe__hint">

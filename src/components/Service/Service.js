@@ -7,6 +7,7 @@ import MakeAnAppointmentSec from "./components/Sections/MakeAnAppointmentSec/Mak
 import FeaturesSec from "./components/Sections/FeaturesSec/FeaturesSec";
 import CompDiagSelect from "../UI/CompDiagSelect/CompDiagSelect";
 import ExperienceSec from "./components/Sections/ExperienceSec/ExperienceSec";
+import MasterSec from "./components/Sections/MasterSec/MasterSec";
 
 const Service = () => {
     return (
@@ -18,6 +19,7 @@ const Service = () => {
                 <CompDiagSelect />
             </FeaturesSec>
             <ExperienceSec />
+            <MasterSec />
             <SideBar/>
             <Footer/>
         </React.Fragment>
