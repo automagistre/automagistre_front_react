@@ -1,9 +1,6 @@
 import React from 'react'
-import './jquery.mCustomScrollbar.less'
 import './GallerySec.less'
 import {companyAbout} from "../../../../../vars/company";
-import $ from 'jquery'
-import 'malihu-custom-scrollbar-plugin'
 
 import Facts from "../Facts/Facts";
 import ImageItem from "./ImageItem/ImageItem";
@@ -12,31 +9,6 @@ import ImageItem from "./ImageItem/ImageItem";
 
 class GallerySec extends React.Component {
     IMG_DIR = '/images/sec-gallery/';
-
-    initScroll_X = ($elem ) => {
-        $elem.mCustomScrollbar({
-            axis: "x",
-            scrollButtons: { enable: false },
-            scrollbarPosition: "outside",
-            alwaysShowScrollbar: 2,
-            updateOnContentResize: true,
-            autoDraggerLength: false,
-            mouseWheel: { enable: false }
-        });
-    };
-
-    componentDidMount() {
-        let $scroll_X = $(".js-scroll-x");
-        if ( $scroll_X.length ) {
-
-            this.initScroll_X( $scroll_X );
-
-            $(window).resize(() => {
-                $scroll_X.mCustomScrollbar("destroy");
-                this.initScroll_X($scroll_X);
-            });
-        }
-    }
 
     render() {
         return(

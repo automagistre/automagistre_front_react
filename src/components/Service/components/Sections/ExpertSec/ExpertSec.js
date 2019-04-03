@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import './slick-slider.less'
 import './ExpertSec.less'
 import './modal-video.scss'
 

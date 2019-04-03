@@ -1,41 +1,16 @@
 import React from 'react'
-import './jquery.mCustomScrollbar.less'
 import './MasterSec.less'
 
-import $ from "jquery";
 import Slick from 'react-slick'
-import 'malihu-custom-scrollbar-plugin'
 
 import backgroundImg from '../../../../../img/backgrounds/bg_sec-master.jpg'
 import {data} from '../../../../../vars/texts/sec_data/sec_master'
+import CustomArrow from "../../../../UI/CostomArrow/CostomArrow";
 
-function CustomArrow(props) {
-    const { className, onClick } = props;
-    return (
-        <button type='button' className={className} onClick={onClick} />
-    );
-}
+
 
 class MasterRender extends React.Component {
     IMG_DIR = "/img/sec-master/"
-
-    componentDidMount() {
-        let $scroll_Y = $(".js-scroll-y");
-        if ( $scroll_Y.length ) {
-            this.initScroll_Y($scroll_Y);
-        }
-    }
-
-    initScroll_Y = ($elem) => {
-        $elem.mCustomScrollbar({
-            axis: "y",
-            scrollButtons: { enable: false },
-            scrollbarPosition: "outside",
-            alwaysShowScrollbar: 0,
-            updateOnContentResize: true,
-            autoDraggerLength: false
-        });
-    }
 
     render() {
         return (
@@ -66,8 +41,6 @@ class MasterRender extends React.Component {
             </div>
         )
     }
-
-
 }
 
 const MasterSec = () => {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import './SelectModel.less'
-import './slick-slider.less'
+
 
 import Slider from 'react-slick'
 import {carManufactures} from "../../../vars/manufactures";

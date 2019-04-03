@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import './slick-slider.less'
 import './WorkSec.less'
 import {data} from '../../../../../vars/texts/sec_data/sec_work'
 import Slick from 'react-slick'
