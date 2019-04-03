@@ -15,6 +15,11 @@ import rtImgBlur from  '../../../../../img/sec-features/rt-img_blur.png';
 
 class FeaturesSec extends React.Component{
 
+    constructor(props) {
+        super(props)
+        props.data ? this.data = props.data : this.data = data
+    }
+
     componentDidMount() {
         this.SECFEAT = {
             $ltMin:  $('.sec-features__lt-img_min'),
@@ -90,7 +95,7 @@ class FeaturesSec extends React.Component{
                 <div className="sec-features__front">
                     <div className="container">
                         <ul className="sec-features__list">
-                            { this.renderFutureItems(data) }
+                            { this.renderFutureItems(this.data) }
                         </ul>
                         {this.props.offerButton &&
                             <div className="sec-features__get">
