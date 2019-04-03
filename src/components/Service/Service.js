@@ -16,6 +16,7 @@ import ExpertSec from "./components/Sections/ExpertSec/ExpertSec";
 import ReviewsSec from "./components/Sections/ReviewsSec/ReviewsSec";
 import $ from 'jquery'
 import 'malihu-custom-scrollbar-plugin'
+import GallerySec from "./components/Sections/GallerySec/GallerySec";
 
 class Service extends Component {
 
@@ -71,6 +72,7 @@ class Service extends Component {
                 <MasterSec />
                 <ExpertSec />
                 <ReviewsSec/>
+                <GallerySec />
                 {/*<SideBar/>*/}
                 <Footer/>
             </React.Fragment>
