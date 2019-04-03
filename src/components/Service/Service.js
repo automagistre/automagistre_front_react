@@ -18,6 +18,7 @@ import $ from 'jquery'
 import 'malihu-custom-scrollbar-plugin'
 import GallerySec from "./components/Sections/GallerySec/GallerySec";
 import PartnersSec from "./components/Sections/PartnersSec/PartnersSec";
+import AboutSec from "./components/Sections/AboutSec/AboutSec";
 
 class Service extends Component {
 
@@ -69,12 +70,7 @@ class Service extends Component {
                 <FeaturesSec offerButton={true}>
                     <CompDiagSelect />
                 </FeaturesSec>
-                <ExperienceSec />
-                <MasterSec />
-                <ExpertSec />
-                <ReviewsSec/>
-                <GallerySec />
-                <PartnersSec />
+                <AboutSec />
                 {/*<SideBar/>*/}
                 <Footer/>
             </React.Fragment>
