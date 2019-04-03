@@ -5,7 +5,16 @@ import SubscribeForm from "../../../../UI/Forms/SubscribeForm";
 import {data} from '../../../../../vars/texts/sec_data/sec_make_anppointment'
 
 class MakeAnAppointmentSec extends Component {
-    data = data
+
+    constructor(props) {
+        super(props)
+        if (props.data) {
+            this.data = props.data
+        }
+        else {
+            this.data = data
+        }
+    }
 
     renderFeatures = data => data.map((value, key) => {
         return (
