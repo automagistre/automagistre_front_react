@@ -3,7 +3,6 @@ import Slider from 'react-slick'
 
 import './PartnersSec.less'
 
-import {data} from '../../../../../vars/texts/sec_data/sec_partners'
 import CustomArrow from "../../../../UI/CostomArrow/CostomArrow";
 
 const PartnersSlide = props => {
@@ -14,7 +13,7 @@ const PartnersSlide = props => {
     )
 }
 
-const PartnersSec = () => {
+const PartnersSec = (props) => {
     const sliderOptions = {
         className: "sec-partners__slider",
         arrows: true,
@@ -34,9 +33,9 @@ const PartnersSec = () => {
     return (
         <section className="sec-partners">
             <div className="container">
-                <h2 className="sec-partners__title">Нам доверяют основные клубы Москвы</h2>
+                <h2 className="sec-partners__title">{props.title}</h2>
                 <Slider {...sliderOptions}>
-                    { data.map((value, key) => {return <PartnersSlide imgDir={IMG_DIR}
+                    { props.data.map((value, key) => {return <PartnersSlide imgDir={IMG_DIR}
                                                                       partner={value}
                                                                       key={key}/>}) }
                 </Slider>
