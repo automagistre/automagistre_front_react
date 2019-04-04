@@ -3,7 +3,7 @@ import Slider from 'react-slick'
 
 import './PartnersSec.less'
 
-import CustomArrow from "../../../../UI/CostomArrow/CostomArrow";
+import CustomArrow from "../../../../UI/CustomArrow/CustomArrow";
 
 const PartnersSlide = props => {
     return (

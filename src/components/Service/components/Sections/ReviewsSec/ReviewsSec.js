@@ -6,7 +6,7 @@ import './ReviewCard.less'
 import {data} from '../../../../../vars/texts/sec_data/sec_reviews'
 
 import Slider from 'react-slick'
-import CustomArrow from "../../../../UI/CostomArrow/CostomArrow";
+import CustomArrow from "../../../../UI/CustomArrow/CustomArrow";
 
 
 const ReviewSlide = props => {

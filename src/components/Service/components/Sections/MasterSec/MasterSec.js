@@ -5,7 +5,7 @@ import Slick from 'react-slick'
 
 import backgroundImg from '../../../../../img/backgrounds/bg_sec-master.jpg'
 import {data} from '../../../../../vars/texts/sec_data/sec_master'
-import CustomArrow from "../../../../UI/CostomArrow/CostomArrow";
+import CustomArrow from "../../../../UI/CustomArrow/CustomArrow";
 
 
 
