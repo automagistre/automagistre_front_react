@@ -1,0 +1,25 @@
+@import "../../../vars/vars";
+@img-dir: "../../../img/";
+
+/*--------------------- BLOCKS: Scroll-top btn -------------------------------*/
+.scroll-top {
+  visibility: hidden;
+  position: fixed;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  bottom: 10px;
+  left: 10px;
+  background: no-repeat center top data-uri("@{img-dir}icons/icon_top_red.svg");
+  background-size: 100% 100%;
+  border-radius: 50%;
+  z-index: 10;
+  opacity: 0;
+  transition: visibility 0.6s, opacity 0.5s ;
+    &.is-active {
+      visibility: visible;
+      display: block;
+      opacity: 1;
+      transition: opacity 0.5s;
+    }
+}
