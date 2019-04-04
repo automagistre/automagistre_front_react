@@ -1,19 +1,18 @@
 import React, {Component} from 'react'
-import './IntroSec.less'
+
 import backgroundImage from '../../../../../img/backgrounds/bg_all-brands.jpg'
-import SubscribeForm from "../../../../UI/Forms/SubscribeForm";
-import {data} from '../../../../../vars/texts/sec_data/sec_make_anppointment'
+
+import './IntroSec.less'
 
 class MakeAnAppointmentSec extends Component {
 
     constructor(props) {
         super(props)
-        if (props.data) {
-            this.data = props.data
-        }
-        else {
-            this.data = data
-        }
+        props.data ? this.data = props.data : this.data = false
+        props.backgroundImage ? this.backgroundImage = props.backgroundImage : this.backgroundImage = backgroundImage
+        this.title = props.title
+        this.lead = props.lead
+
     }
 
     renderFeatures = data => data.map((value, key) => {
@@ -29,17 +28,20 @@ class MakeAnAppointmentSec extends Component {
     render() {
         return (
             <section className="sec-intro">
-                <div className="sec-intro__back" style={{backgroundImage: `url(${backgroundImage}`}} />
+                <div className="sec-intro__back" style={{backgroundImage: `url(${this.backgroundImage}`}} />
                 <div className="sec-intro__front">
                     <div className="container">
-                        <h1 className="sec-intro__title">АВТОСЕРВИС ЯПОНСКИХ И КОРЕЙСКИХ <br /> МАШИН В МОСКВе</h1>
-                        <div className="sec-intro__lead">ЗАПИШИТЕСЬ НА БЕСПЛАТНУЮ ДИАГНОСТИКУ <br /> И МЫ РЕШИМ ВАШУ
-                            ПРОБЛЕМУ
-                        </div>
-                        <SubscribeForm className="subscribe sec-intro__form" />
-                        <ul className="sec-intro__features">
-                            { this.renderFeatures(this.data) }
-                        </ul>
+                        <h1 className="sec-intro__title">{ this.title }</h1>
+                        <div className="sec-intro__lead">{ this.lead  }</div>
+
+                        { this.props.data &&
+                            <ul className="sec-intro__features">
+                                { this.renderFeatures(this.data) }
+                            </ul>
+                        }
+                        { this.props.children &&
+                            this.props.children
+                        }
                     </div>
                 </div>
             </section>
