@@ -49,7 +49,6 @@ class Header extends React.Component {
         }
         if (currentScroll + window.innerHeight + 5 >= document.body.scrollHeight) {
             this.setState({navDown: true})
-            console.log('True')
         }
         this.lastScrollY = currentScroll
     }
