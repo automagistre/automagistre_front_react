@@ -29,46 +29,16 @@ const model = {
     ]
 }
 
-const CarMileageSelect = props => {
+
+const CostingStep01 = props => {
     let mileageRepeat, currentMileage
     const mileageLine = []
 
-    mileageRepeat = props.mileageRepeat
+    mileageRepeat = props.car.equipments.find(equipment => equipment.id === props.currentEquipment).mileageRepeat
     currentMileage = props.currentMileage
 
     for (let i = 1; i < 20; i++) {
         mileageLine.push(i * mileageRepeat)
-    }
-    return (
-        <div className="costing__col-run">
-            <div className="cg-run costing__unit" style={props.style}>
-                <h4 className="costing__title cg-run__title">Какой у вас пробег?</h4>
-                <ul className="cg-run__line" >
-                    {mileageLine.map((value, key) => {
-                        let cls = "cg-run__step"
-                        if (value < currentMileage) { cls += " is-before"}
-                        if (value === currentMileage) { cls += " is-active"}
-                        return (
-                            <li className={cls} key={key} onClick={() => props.setCurrentMileageHandler(value)}>
-                                {value}
-                            </li>
-                        )
-                    })}
-                </ul>
-                <input className="cg-run__info" id="costing-run-info" type="hidden"/>
-            </div>
-        </div>
-    )
-}
-
-const CostingStep01 = props => {
-    let nextStep, errStyle
-    if (props.stepStatus.isValid)
-        nextStep = () => props.changeStep(1 , 2)
-    else {
-        if (props.stepStatus.isTouched)
-            errStyle = {boxShadow: "0 20px 50px -30px red"};
-        nextStep = (e) => e.preventDefault()
     }
 
     return (
@@ -113,15 +83,28 @@ const CostingStep01 = props => {
                         </div>
                     </div>
                     <div className="costing__row">
-                        <CarMileageSelect mileageRepeat={props.car.equipments.find(e => e.id === props.currentEquipment).mileageRepeat}
-                                          setCurrentMileageHandler={props.setCurrentMileageHandler}
-                                          currentMileage={props.currentMileage}
-                                          style={errStyle}
-                        />
+                        <div className="costing__col-run">
+                            <div className="cg-run costing__unit" style={props.style}>
+                                <h4 className="costing__title cg-run__title">Какой у вас пробег?</h4>
+                                <ul className="cg-run__line" >
+                                    {mileageLine.map((value, key) => {
+                                        let cls = "cg-run__step"
+                                        if (value < currentMileage) { cls += " is-before"}
+                                        if (value === currentMileage) { cls += " is-active"}
+                                        return (
+                                            <li className={cls} key={key} onClick={() => props.setCurrentMileageHandler(value)}>
+                                                {value}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                                <input className="cg-run__info" id="costing-run-info" type="hidden"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="costing__step-btm costing__step-btm_rt">
-                    <a className="btn costing__btn" onClick={nextStep}>Далее</a>
+                    <a className="btn costing__btn" onClick={() => props.changeStep(1, 2)}>Далее</a>
                 </div>
             </div>
         </div>
@@ -354,18 +337,11 @@ class CostingSec extends Component {
         mileageRepeat: 15,
         model: model,
         equipment: 100500,
-        step_01: {
-            isTouched: false,
-            isValid: false
-        }
 
     }
     setCurrentMileageHandler = (currentMileage) => {
-        if (this.state.currentMileage >= this.state.mileageRepeat) {
-            this.setState({currentMileage, step_01: {isValid: true, isTouched: true}})
-        } else  {
-            this.setState({currentMileage, step_01: {isValid: false, isTouched: true}})
-        }
+        this.setState({currentMileage})
+
     }
     setStep = (prev, next) => {
         let cls = 'step_0' + next
@@ -424,7 +400,6 @@ class CostingSec extends Component {
                                            setEquipment={this.setEquipment}
                                            changeStep={this.setStep}
                                            setCurrentMileageHandler={this.setCurrentMileageHandler}
-                                           stepStatus={this.state.step_01}
                             />
                             <CostingStep02 setStep={this.setStep}
                             />
