@@ -62,13 +62,13 @@ const CarMileageSelect = props => {
 }
 
 const CostingStep01 = props => {
-    let onClick, errStyle
+    let nextStep, errStyle
     if (props.stepStatus.isValid)
-        onClick = () => props.setStep(1 , 2)
+        nextStep = () => props.changeStep(1 , 2)
     else {
         if (props.stepStatus.isTouched)
             errStyle = {boxShadow: "0 20px 50px -30px red"};
-        onClick = () => this.forceUpdate()
+        nextStep = (e) => e.preventDefault()
     }
 
     return (
@@ -121,7 +121,7 @@ const CostingStep01 = props => {
                     </div>
                 </div>
                 <div className="costing__step-btm costing__step-btm_rt">
-                    <a className="btn costing__btn" onClick={onClick}>Далее</a>
+                    <a className="btn costing__btn" onClick={nextStep}>Далее</a>
                 </div>
             </div>
         </div>
@@ -422,7 +422,7 @@ class CostingSec extends Component {
                                            car={this.state.model}
                                            currentEquipment={this.state.equipment}
                                            setEquipment={this.setEquipment}
-                                           onClick={this.setStep}
+                                           changeStep={this.setStep}
                                            setCurrentMileageHandler={this.setCurrentMileageHandler}
                                            stepStatus={this.state.step_01}
                             />
