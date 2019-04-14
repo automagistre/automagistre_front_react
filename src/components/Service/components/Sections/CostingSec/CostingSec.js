@@ -18,7 +18,85 @@ const model = {
             id:100500,
             name: '1,5/1,8 MT 2WD',
             mileageRepeat: 15,
-            works: []
+            works: [
+                {
+                    id: 1,
+                    name:'Замена масла',
+                    price: 500,
+                    repeat: 15,
+                    recommendation: false,
+                    parts: [
+                        {
+                            id:4,
+                            name: 'Масло ДВС',
+                            manufacture: 'Nissan',
+                            count: 4.5,
+                            price: 600
+                        },
+                        {
+                            id:5,
+                            name: 'Фильтр',
+                            manufacture: 'Nissan',
+                            count: 1,
+                            price: 400
+                        },
+                    ]
+                },
+                {
+                    id: 2,
+                    name:'Замена масла АКПП',
+                    price: 500,
+                    repeat: 60,
+                    recommendation: false,
+                    parts: [
+                        {
+                            id:4,
+                            name: 'Масло ДВС',
+                            manufacture: 'Nissan',
+                            count: 4.5,
+                            price: 600
+                        },
+                        {
+                            id:7,
+                            name: 'Фильтр',
+                            manufacture: 'Nissan',
+                            count: 1,
+                            price: 400
+                        },
+                    ]
+                },
+                {
+                    id: 3,
+                    name:'Диагностика',
+                    price: 500,
+                    repeat: 45,
+                    recommendation: false,
+                    parts: [ ]
+                },
+                {
+                    id: 8,
+                    name:'Замена масла',
+                    price: 500,
+                    repeat: 15,
+                    recommendation: true,
+                    parts: [
+                        {
+                            id:4,
+                            name: 'Масло ДВС',
+                            manufacture: 'Nissan',
+                            count: 4.5,
+                            price: 600
+                        },
+                        {
+                            id:5,
+                            name: 'Фильтр',
+                            manufacture: 'Nissan',
+                            count: 1,
+                            price: 400
+                        },
+                    ]
+                }
+            ],
         },
         {
             id:100501,
@@ -29,6 +107,64 @@ const model = {
     ]
 }
 
+
+const CostingWorksListRender = props => {
+    return (
+        <ul className="cg-price__list">
+            {props.currentEquipment.works.map((work, key)=> {
+                let isWorkSelected
+                if (props.recommendation === work.recommendation){
+                    props.selected.has(work.id) ? isWorkSelected = true : isWorkSelected = false
+                    return (
+                        <li className="cg-price__item" key={key}>
+                            <div className="cg-price__line">
+                                <label className="cg-price__check">
+                                    <input type="checkbox"
+                                           checked={isWorkSelected}
+                                           onChange={() => props.toggleWork(work.id)}
+                                    />
+                                    <span>{work.name}</span>
+                                </label>
+                                <div className="cg-price__cost">
+                                    {work.price}
+                                    <i className="icon-rub"/>
+                                </div>
+                            </div>
+                            <ul className="cg-price__list">
+                                {work.parts.map((part, key)=> {
+                                    let isPartSelected
+                                    if (isWorkSelected){
+                                        props.selected.get(work.id).has(part.id) ? isPartSelected = true : isPartSelected = false
+                                    } else {
+                                        isPartSelected = false
+                                    }
+                                    return (
+                                        <li className="cg-price__item" key={key}>
+                                            <div className="cg-price__line">
+                                                <label className="cg-price__check">
+                                                    <input type="checkbox"
+                                                           checked={isPartSelected}
+                                                           onChange={() => props.togglePart(work.id, part.id)}
+                                                    />
+                                                    <span>{part.name}</span>
+                                                </label>
+                                                <div className="cg-price__cost">
+                                                    {part.price}
+                                                    <i className="icon-rub" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </li>
+                    )
+                }
+
+            })}
+        </ul>
+    )
+}
 
 class CostingStep01 extends Component {
     state = {
@@ -44,7 +180,7 @@ class CostingStep01 extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.car.equipments.find(equipment => equipment.id === nextProps.currentEquipment).mileageRepeat <= nextProps.currentMileage){
+        if (nextProps.car.equipments.find(equipment => equipment.id === nextProps.currentEquipment.id).mileageRepeat <= nextProps.currentMileage){
             this.setState({isTouched: true, isValid: true})
         } else {
             this.setState({isTouched: true, isValid: false})
@@ -55,7 +191,7 @@ class CostingStep01 extends Component {
         let mileageRepeat, currentMileage, style
         const mileageLine = []
 
-        mileageRepeat = this.props.car.equipments.find(equipment => equipment.id === this.props.currentEquipment).mileageRepeat
+        mileageRepeat = this.props.currentEquipment.mileageRepeat
         currentMileage = this.props.currentMileage
 
         for (let i = 1; i < 20; i++) {
@@ -64,7 +200,6 @@ class CostingStep01 extends Component {
         if (!this.state.isValid && this.state.isTouched) {
             style = {boxShadow: "0 20px 50px -30px red"}
         }
-
         return (
             <div className="costing__step costing__step_01">
                 <div className="container">
@@ -93,7 +228,7 @@ class CostingStep01 extends Component {
                                             return (
                                                 <label className="cg-set__radio" key={key}>
                                                     <input type="radio"
-                                                           checked={equipment.id === this.props.currentEquipment}
+                                                           checked={equipment.id === this.props.currentEquipment.id}
                                                            readOnly
                                                     />
                                                     <span onClick={() => this.props.setEquipment(equipment)}>
@@ -149,87 +284,11 @@ const CostingStep02 = props => {
                     <div className="costing__row">
                         <div className="costing__col-half">
                             <div className="cg-price costing__unit">
-                                <h4 className="costing__title cg-price__title">Регламетное
-                                    техническое обслуживание:</h4>
+                                <h4 className="costing__title cg-price__title">
+                                    Регламетное техническое обслуживание:
+                                </h4>
                                 <div className="cg-price__body js-scroll-y">
-                                    <ul className="cg-price__list">
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">600 <i
-                                                    className="icon-rub">a</i></div>
-                                            </div>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">600 <i
-                                                    className="icon-rub">a</i></div>
-                                            </div>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">600 <i
-                                                    className="icon-rub">a</i></div>
-                                            </div>
-                                            <ul className="cg-price__list">
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                        <div className="cg-price__cost">600 <i
-                                                            className="icon-rub">a</i></div>
-                                                    </div>
-                                                </li>
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                        <div className="cg-price__cost">600 <i
-                                                            className="icon-rub">a</i></div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">600 <i
-                                                    className="icon-rub">a</i></div>
-                                            </div>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">600 <i
-                                                    className="icon-rub">a</i></div>
-                                            </div>
-                                            <ul className="cg-price__list">
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                        <div className="cg-price__cost">600 <i
-                                                            className="icon-rub">a</i></div>
-                                                    </div>
-                                                </li>
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                        <div className="cg-price__cost">600 <i
-                                                            className="icon-rub">a</i></div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <CostingWorksListRender {...props}  recommendation={false}/>
                                 </div>
                             </div>
                             <div className="cg-total">
@@ -243,102 +302,7 @@ const CostingStep02 = props => {
                                 <h4 className="costing__title cg-price__title">Дополнительно
                                     рекомендуем:</h4>
                                 <div className="cg-price__body js-scroll-y">
-                                    <ul className="cg-price__list">
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">600 <i
-                                                    className="icon-rub">a</i></div>
-                                                <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Снятие и установка защиты двигателя</span></label>
-                                                <div className="cg-price__cost">200 <i
-                                                    className="icon-rub">a</i></div>
-                                                <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Замена жидкости сцепления:</span></label>
-                                                <div className="cg-price__cost"></div>
-                                                <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                </div>
-                                            </div>
-                                            <ul className="cg-price__list">
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Тормозная жидкость (оригинал)</span></label>
-                                                        <div className="cg-price__cost">0.5 л -
-                                                            250 <i className="icon-rub">a</i></div>
-                                                        <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Чистка дроссельной заслонки:</span></label>
-                                                <div className="cg-price__cost"></div>
-                                                <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                </div>
-                                            </div>
-                                            <ul className="cg-price__list">
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Очиститель</span></label>
-                                                        <div className="cg-price__cost">1 л - 300 <i
-                                                            className="icon-rub">a</i></div>
-                                                        <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li className="cg-price__item">
-                                            <div className="cg-price__line">
-                                                <label className="cg-price__check"><input
-                                                    type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                <div className="cg-price__cost">1 700 <i
-                                                    className="icon-rub">a</i></div>
-                                                <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                </div>
-                                            </div>
-                                            <ul className="cg-price__list">
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                        <div className="cg-price__cost">175 <i
-                                                            className="icon-rub">a</i></div>
-                                                        <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="cg-price__item">
-                                                    <div className="cg-price__line">
-                                                        <label className="cg-price__check"><input
-                                                            type="checkbox"/><span>Компьютерная диагностика</span></label>
-                                                        <div className="cg-price__cost">97 500 <i
-                                                            className="icon-rub">a</i></div>
-                                                        <div className="cg-price__info"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    <CostingWorksListRender {...props} recommendation={true} />
                                 </div>
                             </div>
                             <div className="cg-total">
@@ -358,20 +322,68 @@ const CostingStep02 = props => {
 }
 
 class CostingSec extends Component {
-    state = {
-        currStep: {
+
+    constructor (props) {
+        super(props)
+        const currStep = {
             cls:'step_01',
             num: 0
-        },
-        currentMileage: 0,
-        mileageRepeat: 0,
-        model: model,
-        equipment: 100500,
-
+        }
+        const currentMileage = 0
+        const equipment = model.equipments[0]
+        const mileageRepeat = model.equipments[0].mileageRepeat
+        const selected = this.generateSelects(model.equipments[0])
+        this.state = {
+            model,
+            currentMileage,
+            equipment,
+            mileageRepeat,
+            currStep,
+            selected
+        }
+    }
+    generateSelects = (equipment) => {
+        const selected = new Map()
+        for (let i in equipment.works) {
+            if (!equipment.works[i].recommendation) {
+                let id = equipment.works[i].id
+                let parts = new Set()
+                for(let j in equipment.works[i].parts) {
+                    parts.add(equipment.works[i].parts[j].id)
+                }
+                selected.set(id, parts)
+            }
+        }
+        return selected
     }
     setCurrentMileageHandler = (currentMileage, mileageRepeat) => {
         this.setState({currentMileage, mileageRepeat})
 
+    }
+    togglePart = (work, id) => {
+        const selected = this.state.selected
+        let parts = selected.get(work)
+        if (parts) {
+            parts.has(id) ? parts.delete(id) : parts.add(id)
+            selected.set(work, parts)
+            this.setState(selected)
+        }
+    }
+    toggleWork = (id) => {
+        const selected = this.state.selected
+        if (selected.has(id)) {
+            selected.delete(id)
+        } else {
+            const parts = new Set()
+            const partsForSelect = this.state.equipment.works.find(w => w.id === id).parts
+            if (partsForSelect) {
+                for (let i in partsForSelect) {
+                    parts.add(partsForSelect[i].id)
+                }
+                selected.set(id, parts)
+            }
+        }
+        this.setState({selected})
     }
     setStep = (prev, next) => {
         let cls = 'step_0' + next
@@ -385,10 +397,12 @@ class CostingSec extends Component {
             if (prevState.currentMileage % equipment.mileageRepeat !== 0 ) {
                 currentMileage -= prevState.currentMileage % equipment.mileageRepeat
             }
+            const selected = this.generateSelects(equipment)
             return {
-                equipment:equipment.id,
+                equipment:equipment,
                 currentMileage,
-                mileageRepeat: equipment.mileageRepeat
+                mileageRepeat: equipment.mileageRepeat,
+                selected,
             }
         }
     )}
@@ -406,6 +420,7 @@ class CostingSec extends Component {
             slidesToShow: 1,
             slidesToScroll: 1
         }
+        console.log(this.state.selected)
         return (
             <section className="sec-costing">
                 <div className="container">
@@ -431,7 +446,14 @@ class CostingSec extends Component {
                                            changeStep={this.setStep}
                                            setCurrentMileageHandler={this.setCurrentMileageHandler}
                             />
-                            <CostingStep02 setStep={this.setStep}
+                            <CostingStep02 currentEquipment={this.state.equipment}
+                                           currentMileage={this.state.currentMileage}
+                                           mileageRepeat={this.state.mileageRepeat}
+                                           selected={this.state.selected}
+                                           setStep={this.setStep}
+                                           togglePart={this.togglePart}
+                                           toggleWork={this.toggleWork}
+
                             />
 
                             <div className="costing__step costing__step_03" id="costing-step_03">
