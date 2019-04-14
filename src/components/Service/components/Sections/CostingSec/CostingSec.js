@@ -30,85 +30,115 @@ const model = {
 }
 
 
-const CostingStep01 = props => {
-    let mileageRepeat, currentMileage
-    const mileageLine = []
-
-    mileageRepeat = props.car.equipments.find(equipment => equipment.id === props.currentEquipment).mileageRepeat
-    currentMileage = props.currentMileage
-
-    for (let i = 1; i < 20; i++) {
-        mileageLine.push(i * mileageRepeat)
+class CostingStep01 extends Component {
+    state = {
+        isValid: false,
+        isTouched: false,
     }
 
-    return (
-        <div className="costing__step costing__step_01" >
-            <div className="container">
-                <div className="costing__step-wrap">
-                    <div className="costing__row">
-                        <div className="costing__col-car">
-                            <div className="cg-car costing__unit">
-                                <div className="cg-car__name">{props.car.name}</div>
-                                <div className="cg-car__pict">
-                                    <img className="cg-car__img"
-                                         src={props.car.img}
-                                         alt={props.car.name}
-                                    />
+    nextStep = () => {
+        this.setState({isTouched: true})
+        if (this.state.isValid) {
+            this.props.changeStep(1, 2)
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.car.equipments.find(equipment => equipment.id === nextProps.currentEquipment).mileageRepeat <= nextProps.currentMileage){
+            this.setState({isTouched: true, isValid: true})
+        } else {
+            this.setState({isTouched: true, isValid: false})
+        }
+    }
+
+    render() {
+        let mileageRepeat, currentMileage, style
+        const mileageLine = []
+
+        mileageRepeat = this.props.car.equipments.find(equipment => equipment.id === this.props.currentEquipment).mileageRepeat
+        currentMileage = this.props.currentMileage
+
+        for (let i = 1; i < 20; i++) {
+            mileageLine.push(i * mileageRepeat)
+        }
+        if (!this.state.isValid && this.state.isTouched) {
+            style = {boxShadow: "0 20px 50px -30px red"}
+        }
+
+        return (
+            <div className="costing__step costing__step_01">
+                <div className="container">
+                    <div className="costing__step-wrap">
+                        <div className="costing__row">
+                            <div className="costing__col-car">
+                                <div className="cg-car costing__unit">
+                                    <div className="cg-car__name">{this.props.car.name}</div>
+                                    <div className="cg-car__pict">
+                                        <img className="cg-car__img"
+                                             src={this.props.car.img}
+                                             alt={this.props.car.name}
+                                        />
+                                    </div>
+                                    <ul className="cg-car__data">
+                                        <li>{this.props.equipment}</li>
+                                        <li>{`${this.props.car.startYear} - ${this.props.car.stopYear}`}</li>
+                                    </ul>
                                 </div>
-                                <ul className="cg-car__data">
-                                    <li>{props.equipment}</li>
-                                    <li>{`${props.car.startYear} - ${props.car.stopYear}`}</li>
-                                </ul>
                             </div>
-                        </div>
-                        <div className="costing__col-set">
-                            <div className="cg-set costing__unit">
-                                <h4 className="costing__title cg-set__title">Выберите комплектацию:</h4>
-                                <div className="cg-set__list">
-                                    {props.car.equipments.map((equipment, key) => {
-                                        return (
-                                            <label className="cg-set__radio" key={key}>
-                                                <input type="radio"
-                                                       checked={equipment.id === props.currentEquipment}
-                                                       readOnly
-                                                />
-                                                <span onClick={() => props.setEquipment(equipment)}>
+                            <div className="costing__col-set">
+                                <div className="cg-set costing__unit">
+                                    <h4 className="costing__title cg-set__title">Выберите комплектацию:</h4>
+                                    <div className="cg-set__list">
+                                        {this.props.car.equipments.map((equipment, key) => {
+                                            return (
+                                                <label className="cg-set__radio" key={key}>
+                                                    <input type="radio"
+                                                           checked={equipment.id === this.props.currentEquipment}
+                                                           readOnly
+                                                    />
+                                                    <span onClick={() => this.props.setEquipment(equipment)}>
                                                     {equipment.name}
                                                 </span>
-                                            </label>
-                                        )
-                                    })}
+                                                </label>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="costing__row">
+                            <div className="costing__col-run">
+                                <div className="cg-run costing__unit" style={style}>
+                                    <h4 className="costing__title cg-run__title">Какой у вас пробег?</h4>
+                                    <ul className="cg-run__line">
+                                        {mileageLine.map((value, key) => {
+                                            let cls = "cg-run__step"
+                                            if (value < currentMileage) {
+                                                cls += " is-before"
+                                            }
+                                            if (value === currentMileage) {
+                                                cls += " is-active"
+                                            }
+                                            return (
+                                                <li className={cls} key={key}
+                                                    onClick={() => this.props.setCurrentMileageHandler(value, currentMileage)}>
+                                                    {value}
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                    <input className="cg-run__info" id="costing-run-info" type="hidden"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="costing__row">
-                        <div className="costing__col-run">
-                            <div className="cg-run costing__unit" style={props.style}>
-                                <h4 className="costing__title cg-run__title">Какой у вас пробег?</h4>
-                                <ul className="cg-run__line" >
-                                    {mileageLine.map((value, key) => {
-                                        let cls = "cg-run__step"
-                                        if (value < currentMileage) { cls += " is-before"}
-                                        if (value === currentMileage) { cls += " is-active"}
-                                        return (
-                                            <li className={cls} key={key} onClick={() => props.setCurrentMileageHandler(value)}>
-                                                {value}
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                                <input className="cg-run__info" id="costing-run-info" type="hidden"/>
-                            </div>
-                        </div>
+                    <div className="costing__step-btm costing__step-btm_rt">
+                        <a className="btn costing__btn" onClick={this.nextStep}>Далее</a>
                     </div>
                 </div>
-                <div className="costing__step-btm costing__step-btm_rt">
-                    <a className="btn costing__btn" onClick={() => props.changeStep(1, 2)}>Далее</a>
-                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 const CostingStep02 = props => {
@@ -334,13 +364,13 @@ class CostingSec extends Component {
             num: 0
         },
         currentMileage: 0,
-        mileageRepeat: 15,
+        mileageRepeat: 0,
         model: model,
         equipment: 100500,
 
     }
-    setCurrentMileageHandler = (currentMileage) => {
-        this.setState({currentMileage})
+    setCurrentMileageHandler = (currentMileage, mileageRepeat) => {
+        this.setState({currentMileage, mileageRepeat})
 
     }
     setStep = (prev, next) => {
