@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import './CostingSec.less'
 import './CostingBlock.less'
-import CostingAnimation from "./CostingAnimation";
+import CostingAnimation from "./CostingAnimation"
 import Slider from 'react-slick'
+
 
 
 const model = {
@@ -322,6 +323,18 @@ const CostingStep02 = props => {
 }
 
 const CostingStep03 = props => {
+    const calendarOptions = {
+        format: 'dd.mm.yyyy',
+        startDate: '0d',
+        language: 'ru',
+        autoclose: false,
+        multidate: false,
+        clearBtn: false,
+        todayHighlight: true,
+        //title: "Календарь",
+        orientation: "left bottom"
+    }
+    let date = `${props.date.getDate()}.${props.date.getMonth()+1}.${props.date.getFullYear()} `
     return (
         <div className="costing__step costing__step_03" id="costing-step_03">
             <div className="container">
@@ -334,10 +347,13 @@ const CostingStep03 = props => {
                                     <h4 className="costing__title cg-order__title">
                                         Выберите удобную дату:
                                     </h4>
-                                    <div className="cg-order__date" id="cg-order-date" />
+                                    <div className="cg-order__date" id="cg-order-date">
+                                        {date}
+                                    </div>
                                 </div>
                                 <div className="cg-order__body">
-                                    <div className="cg-calendar js-cg-datepicker" />
+                                    {/*<div className="cg-calendar js-cg-datepicker" />*/}
+
                                 </div>
                             </div>
                         </div>
@@ -345,7 +361,7 @@ const CostingStep03 = props => {
                             <div className="cg-order costing__unit">
                                 <div className="cg-order__head cg-order__head_red">
                                     <h4 className="costing__title cg-order__title">Итого:</h4>
-                                    <div className="cg-order__cost">15 700 ₽</div>
+                                    <div className="cg-order__cost">{props.totalCost} ₽</div>
                                 </div>
                                 <div className="cg-order__body">
                                     <div className="cg-order__line cg-order__line_name">
@@ -402,12 +418,14 @@ class CostingSec extends Component {
             currStep,
             selected,
             worksCost: 0,
-            recommendationsCost: 0
+            recommendationsCost: 0,
+            date: 0
         }
     }
     componentWillMount() {
         const [worksCost, recommendationsCost] = this.calculateCost(this.state.selected)
-        this.setState({worksCost, recommendationsCost})
+        const date = new Date()
+        this.setState({worksCost, recommendationsCost, date})
     }
 
     generateSelects = (equipment) => {
@@ -482,6 +500,9 @@ class CostingSec extends Component {
             }
         }
     )}
+    changeDateHandler = date => {
+        console.log(date)
+    }
     calculateCost = selected => {
         let worksCost, recommendationsCost
         worksCost = recommendationsCost = 0
@@ -515,7 +536,6 @@ class CostingSec extends Component {
             slidesToShow: 1,
             slidesToScroll: 1
         }
-        console.log(this.state.selected)
         return (
             <section className="sec-costing">
                 <div className="container">
@@ -553,6 +573,8 @@ class CostingSec extends Component {
 
                             />
                             <CostingStep03 setStep={this.setStep}
+                                           totalCost={this.state.worksCost + this.state.recommendationsCost}
+                                           date={this.state.date}
 
                             />
                             <div className="costing__step costing__step_04" id="costing-step_04">
