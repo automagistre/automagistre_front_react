@@ -111,7 +111,7 @@ const model = {
 const CostingWorksListRender = props => {
     return (
         <ul className="cg-price__list">
-            {props.currentEquipment.works.map((work, key)=> {
+            {props.currentEquipment.works.map((work, key) => {
                 let isWorkSelected
                 if (props.recommendation === work.recommendation){
                     props.selected.has(work.id) ? isWorkSelected = true : isWorkSelected = false
@@ -160,7 +160,7 @@ const CostingWorksListRender = props => {
                         </li>
                     )
                 }
-
+                return (<React.Fragment key={key}/>)
             })}
         </ul>
     )
@@ -175,7 +175,7 @@ class CostingStep01 extends Component {
     nextStep = () => {
         this.setState({isTouched: true})
         if (this.state.isValid) {
-            this.props.changeStep(1, 2)
+            this.props.setStep(1, 2)
         }
     }
 
@@ -293,7 +293,7 @@ const CostingStep02 = props => {
                             </div>
                             <div className="cg-total">
                                 <div className="cg-total__note">Стоимость обязательного ТО:</div>
-                                <div className="cg-total__cost">15 200 ₽</div>
+                                <div className="cg-total__cost">{props.worksCost} ₽</div>
                             </div>
                         </div>
 
@@ -307,7 +307,7 @@ const CostingStep02 = props => {
                             </div>
                             <div className="cg-total">
                                 <div className="cg-total__note">Итого с учетом доп. услуг:</div>
-                                <div className="cg-total__cost">15 200 ₽</div>
+                                <div className="cg-total__cost">{props.worksCost + props.recommendationsCost} ₽</div>
                             </div>
                         </div>
                     </div>
@@ -315,6 +315,67 @@ const CostingStep02 = props => {
                 <div className="costing__step-btm costing__step-btm_sb">
                     <a className="btn costing__btn" onClick={() => props.setStep(2,1)}>Назад</a>
                     <a className="btn costing__btn" onClick={() => props.setStep(2,3)}>Оформить заявку</a>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const CostingStep03 = props => {
+    return (
+        <div className="costing__step costing__step_03" id="costing-step_03">
+            <div className="container">
+                <div className="costing__step-wrap">
+                    <h4 className="costing__step-title">Теперь вы можете легко оформить заявку:</h4>
+                    <div className="costing__row">
+                        <div className="costing__col-half">
+                            <div className="cg-order costing__unit">
+                                <div className="cg-order__head">
+                                    <h4 className="costing__title cg-order__title">
+                                        Выберите удобную дату:
+                                    </h4>
+                                    <div className="cg-order__date" id="cg-order-date" />
+                                </div>
+                                <div className="cg-order__body">
+                                    <div className="cg-calendar js-cg-datepicker" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="costing__col-half">
+                            <div className="cg-order costing__unit">
+                                <div className="cg-order__head cg-order__head_red">
+                                    <h4 className="costing__title cg-order__title">Итого:</h4>
+                                    <div className="cg-order__cost">15 700 ₽</div>
+                                </div>
+                                <div className="cg-order__body">
+                                    <div className="cg-order__line cg-order__line_name">
+                                        <input className="cg-order__input" type="text"
+                                               placeholder="Ваше имя и отчество"/>
+                                    </div>
+                                    <div className="cg-order__line cg-order__line_phon">
+                                        <input className="cg-order__input cg-order__input_phone"
+                                               type="text" placeholder="Телефон"/>
+                                    </div>
+                                    <div className="cg-order__line cg-order__line_chat">
+                                        <input className="cg-order__input cg-order__input_info"
+                                               type="text" placeholder="Дополнительная информация"/>
+                                    </div>
+                                    <div className="cg-order__line">
+                                        <label className="cg-order__check">
+                                            <input type="checkbox"/>
+                                            <span>Я принимаю <a href="#" target="_blank">условия передачи информации</a>
+                                                  и согласен с <a href="#" target="_blank">правилами оферты</a>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="costing__step-btm costing__step-btm_sb">
+                    <a className="btn costing__btn" onClick={() => props.setStep(3, 2)}>Назад</a>
+                    <a className="btn costing__btn" onClick={() => props.setStep(3, 4)}>Записаться на обслуживание</a>
                 </div>
             </div>
         </div>
@@ -330,28 +391,39 @@ class CostingSec extends Component {
             num: 0
         }
         const currentMileage = 0
-        const equipment = model.equipments[0]
+        const currentEquipment = model.equipments[0]
         const mileageRepeat = model.equipments[0].mileageRepeat
         const selected = this.generateSelects(model.equipments[0])
         this.state = {
             model,
             currentMileage,
-            equipment,
+            currentEquipment,
             mileageRepeat,
             currStep,
-            selected
+            selected,
+            worksCost: 0,
+            recommendationsCost: 0
         }
     }
+    componentWillMount() {
+        const [worksCost, recommendationsCost] = this.calculateCost(this.state.selected)
+        this.setState({worksCost, recommendationsCost})
+    }
+
     generateSelects = (equipment) => {
         const selected = new Map()
         for (let i in equipment.works) {
-            if (!equipment.works[i].recommendation) {
-                let id = equipment.works[i].id
-                let parts = new Set()
-                for(let j in equipment.works[i].parts) {
-                    parts.add(equipment.works[i].parts[j].id)
+            if(equipment.works.hasOwnProperty(i)) {
+                if (!equipment.works[i].recommendation) {
+                    let id = equipment.works[i].id
+                    let parts = new Set()
+                    for(let j in equipment.works[i].parts) {
+                        if (equipment.works[i].parts.hasOwnProperty(j)) {
+                            parts.add(equipment.works[i].parts[j].id)
+                        }
+                    }
+                    selected.set(id, parts)
                 }
-                selected.set(id, parts)
             }
         }
         return selected
@@ -366,7 +438,8 @@ class CostingSec extends Component {
         if (parts) {
             parts.has(id) ? parts.delete(id) : parts.add(id)
             selected.set(work, parts)
-            this.setState(selected)
+            const [worksCost, recommendationsCost] = this.calculateCost(selected)
+            this.setState({selected, worksCost, recommendationsCost})
         }
     }
     toggleWork = (id) => {
@@ -375,15 +448,18 @@ class CostingSec extends Component {
             selected.delete(id)
         } else {
             const parts = new Set()
-            const partsForSelect = this.state.equipment.works.find(w => w.id === id).parts
+            const partsForSelect = this.state.currentEquipment.works.find(w => w.id === id).parts
             if (partsForSelect) {
                 for (let i in partsForSelect) {
-                    parts.add(partsForSelect[i].id)
+                    if (partsForSelect.hasOwnProperty(i)){
+                        parts.add(partsForSelect[i].id)
+                    }
                 }
                 selected.set(id, parts)
             }
         }
-        this.setState({selected})
+        const [worksCost, recommendationsCost] = this.calculateCost(selected)
+        this.setState({selected,worksCost, recommendationsCost})
     }
     setStep = (prev, next) => {
         let cls = 'step_0' + next
@@ -399,13 +475,32 @@ class CostingSec extends Component {
             }
             const selected = this.generateSelects(equipment)
             return {
-                equipment:equipment,
+                currentEquipment:equipment,
                 currentMileage,
                 mileageRepeat: equipment.mileageRepeat,
                 selected,
             }
         }
     )}
+    calculateCost = selected => {
+        let worksCost, recommendationsCost
+        worksCost = recommendationsCost = 0
+        for(let work of selected.keys()) {
+            let selectedWork = this.state.currentEquipment.works.find(w => w.id === work)
+            let partsCost = 0
+            for (let part of selected.get(work).values()) {
+                let selectedPart = selectedWork.parts.find(p => p.id === part)
+
+                partsCost += selectedPart.price
+            }
+            if (selectedWork.recommendation) {
+                recommendationsCost += selectedWork.price + partsCost
+            } else {
+                worksCost += selectedWork.price + partsCost
+            }
+        }
+        return [worksCost, recommendationsCost]
+    }
     render() {
         const sliderOptions = {
             className: 'costing',
@@ -441,79 +536,25 @@ class CostingSec extends Component {
                         <Slider ref={slider => (this.slider = slider)} {...sliderOptions} >
                             <CostingStep01 currentMileage={this.state.currentMileage}
                                            car={this.state.model}
-                                           currentEquipment={this.state.equipment}
+                                           currentEquipment={this.state.currentEquipment}
                                            setEquipment={this.setEquipment}
-                                           changeStep={this.setStep}
+                                           setStep={this.setStep}
                                            setCurrentMileageHandler={this.setCurrentMileageHandler}
                             />
-                            <CostingStep02 currentEquipment={this.state.equipment}
+                            <CostingStep02 currentEquipment={this.state.currentEquipment}
                                            currentMileage={this.state.currentMileage}
                                            mileageRepeat={this.state.mileageRepeat}
                                            selected={this.state.selected}
                                            setStep={this.setStep}
                                            togglePart={this.togglePart}
                                            toggleWork={this.toggleWork}
+                                           worksCost={this.state.worksCost}
+                                           recommendationsCost={this.state.recommendationsCost}
 
                             />
+                            <CostingStep03 setStep={this.setStep}
 
-                            <div className="costing__step costing__step_03" id="costing-step_03">
-                                <div className="container">
-                                    <div className="costing__step-wrap">
-                                        <h4 className="costing__step-title">Теперь вы можете легко оформить заявку:</h4>
-                                        <div className="costing__row">
-                                            <div className="costing__col-half">
-                                                <div className="cg-order costing__unit">
-                                                    <div className="cg-order__head">
-                                                        <h4 className="costing__title cg-order__title">Выберите удобную
-                                                            дату:</h4>
-                                                        <div className="cg-order__date" id="cg-order-date"></div>
-                                                    </div>
-                                                    <div className="cg-order__body">
-                                                        <div className="cg-calendar js-cg-datepicker"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="costing__col-half">
-                                                <div className="cg-order costing__unit">
-                                                    <div className="cg-order__head cg-order__head_red">
-                                                        <h4 className="costing__title cg-order__title">Итого: </h4>
-                                                        <div className="cg-order__cost">15 700 ₽</div>
-                                                    </div>
-                                                    <div className="cg-order__body">
-                                                        <div className="cg-order__line cg-order__line_name">
-                                                            <input className="cg-order__input" type="text"
-                                                                   placeholder="Ваше имя и отчество"/>
-                                                        </div>
-                                                        <div className="cg-order__line cg-order__line_phon">
-                                                            <input className="cg-order__input cg-order__input_phone"
-                                                                   type="text" placeholder="Телефон"/>
-                                                        </div>
-                                                        <div className="cg-order__line cg-order__line_chat">
-                                                            <input className="cg-order__input cg-order__input_info"
-                                                                   type="text" placeholder="Дополнительная информация"/>
-                                                        </div>
-                                                        <div className="cg-order__line">
-                                                            <label className="cg-order__check">
-                                                                <input type="checkbox"/>
-                            <span>
-                          Я принимаю <a href="#" target="_blank">условия передачи информации</a>
-                          и согласен с <a href="#" target="_blank">правилами оферты</a>
-                        </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="costing__step-btm costing__step-btm_sb">
-                                        <a className="btn costing__btn js-cg-back-step_02" role="button">Назад</a>
-                                        <a className="btn costing__btn js-cg-next-step_04" role="button">Записаться на
-                                            обслуживание</a>
-                                    </div>
-                                </div>
-                            </div>
+                            />
                             <div className="costing__step costing__step_04" id="costing-step_04">
                                 <div className="container">
                                     <div className="costing__step-wrap">
