@@ -78,7 +78,7 @@ const model = {
                     id: 8,
                     name:'Замена масла',
                     price: 500,
-                    repeat: 15,
+                    repeat: 60,
                     recommendation: true,
                     parts: [
                         {
@@ -103,7 +103,31 @@ const model = {
             id:100501,
             name: '7.0T MT 2WD',
             mileageRepeat: 10,
-            works: []
+            works: [
+                {
+                    id: 1,
+                    name:'Замена масла',
+                    price: 500,
+                    repeat: 10,
+                    recommendation: false,
+                    parts: [
+                        {
+                            id:4,
+                            name: 'Масло ДВС',
+                            manufacture: 'Nissan',
+                            count: 4.5,
+                            price: 600
+                        },
+                        {
+                            id:5,
+                            name: 'Фильтр',
+                            manufacture: 'Nissan',
+                            count: 1,
+                            price: 405
+                        },
+                    ]
+                },
+            ]
         }
     ]
 }
@@ -114,7 +138,7 @@ const CostingWorksListRender = props => {
         <ul className="cg-price__list">
             {props.currentEquipment.works.map((work, key) => {
                 let isWorkSelected
-                if (props.recommendation === work.recommendation){
+                if (props.recommendation === work.recommendation && props.currentMileage % work.repeat === 0){
                     props.selected.has(work.id) ? isWorkSelected = true : isWorkSelected = false
                     return (
                         <li className="cg-price__item" key={key}>
@@ -409,7 +433,7 @@ class CostingSec extends Component {
         const currentMileage = 0
         const currentEquipment = model.equipments[0]
         const mileageRepeat = model.equipments[0].mileageRepeat
-        const selected = this.generateSelects(model.equipments[0])
+        const selected = this.generateSelects(model.equipments[0], 1)
         this.state = {
             model,
             currentMileage,
@@ -428,11 +452,11 @@ class CostingSec extends Component {
         this.setState({worksCost, recommendationsCost, date})
     }
 
-    generateSelects = (equipment) => {
+    generateSelects = (equipment, repeat) => {
         const selected = new Map()
         for (let i in equipment.works) {
             if(equipment.works.hasOwnProperty(i)) {
-                if (!equipment.works[i].recommendation) {
+                if (!equipment.works[i].recommendation && repeat % equipment.works[i].repeat === 0) {
                     let id = equipment.works[i].id
                     let parts = new Set()
                     for(let j in equipment.works[i].parts) {
@@ -447,7 +471,9 @@ class CostingSec extends Component {
         return selected
     }
     setCurrentMileageHandler = (currentMileage, mileageRepeat) => {
-        this.setState({currentMileage, mileageRepeat})
+        let selected = this.generateSelects(this.state.currentEquipment, currentMileage)
+        const [worksCost, recommendationsCost] = this.calculateCost(selected)
+        this.setState({currentMileage, mileageRepeat, selected, worksCost, recommendationsCost})
 
     }
     togglePart = (work, id) => {
@@ -491,23 +517,25 @@ class CostingSec extends Component {
             if (prevState.currentMileage % equipment.mileageRepeat !== 0 ) {
                 currentMileage -= prevState.currentMileage % equipment.mileageRepeat
             }
-            const selected = this.generateSelects(equipment)
+            const selected = this.generateSelects(equipment, currentMileage)
+            const [worksCost, recommendationsCost] = this.calculateCost(selected, equipment)
             return {
                 currentEquipment:equipment,
                 currentMileage,
                 mileageRepeat: equipment.mileageRepeat,
                 selected,
+                worksCost, recommendationsCost
             }
         }
     )}
     changeDateHandler = date => {
         console.log(date)
     }
-    calculateCost = selected => {
+    calculateCost = (selected, equipment=this.state.currentEquipment) => {
         let worksCost, recommendationsCost
         worksCost = recommendationsCost = 0
         for(let work of selected.keys()) {
-            let selectedWork = this.state.currentEquipment.works.find(w => w.id === work)
+            let selectedWork = equipment.works.find(w => w.id === work)
             let partsCost = 0
             for (let part of selected.get(work).values()) {
                 let selectedPart = selectedWork.parts.find(p => p.id === part)
