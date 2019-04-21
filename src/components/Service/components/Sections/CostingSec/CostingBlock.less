@@ -631,6 +631,53 @@
     }
 }
 
+.react-calendar {
+    border: none;
+    width: 100%;
+    &__navigation{
+        margin-bottom: 10px;
+        &__arrow {
+            font-size: 30px;
+            border-radius: 20px;
+            min-width: 65px;
+            background-color: #f0f1f3 !important;
+                &[disabled]{
+                    visibility: hidden;
+                }
+        }
+        &__label {
+            font-weight: 400;
+            border-radius: 20px;
+            margin: 0 5px !important;
+            background-color: #f0f1f3 !important;
+        }
+    }
+    &__month-view__weekdays {
+        display: none !important;
+    }
+    &__tile {
+        font-weight: 400;
+        padding: 11px 8px;
+        &:enabled:hover {
+            background: none;
+            color: @red;
+        }
+        &--rangeStart{
+            background: @red;
+            color: white;
+        }
+        &--active{
+            border-radius: 4px;
+            background: @red;
+            color: white;
+            &:enabled:focus, &:enabled:hover{
+                border-radius: 4px;
+                background: @red;
+                color: white;
+            }
+        }
+    }
+}
 
 .steps {
     background-position: 0 0;

@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import './CostingSec.less'
-import './CostingBlock.less'
 import CostingAnimation from "./CostingAnimation"
 import Slider from 'react-slick'
-
+import Calendar from 'react-calendar'
+import './CostingBlock.less'
+import './CostingSec.less'
 
 
 const model = {
@@ -347,17 +347,6 @@ const CostingStep02 = props => {
 }
 
 const CostingStep03 = props => {
-    const calendarOptions = {
-        format: 'dd.mm.yyyy',
-        startDate: '0d',
-        language: 'ru',
-        autoclose: false,
-        multidate: false,
-        clearBtn: false,
-        todayHighlight: true,
-        //title: "Календарь",
-        orientation: "left bottom"
-    }
     let date = `${props.date.getDate()}.${props.date.getMonth()+1}.${props.date.getFullYear()} `
     return (
         <div className="costing__step costing__step_03" id="costing-step_03">
@@ -376,7 +365,12 @@ const CostingStep03 = props => {
                                     </div>
                                 </div>
                                 <div className="cg-order__body">
-                                    {/*<div className="cg-calendar js-cg-datepicker" />*/}
+                                    <Calendar className="cg-calendar"
+                                              minDate={new Date()}
+                                              locale="ru-RU"
+                                              prev2Label={null}
+                                              next2Label={null}
+                                    />
 
                                 </div>
                             </div>
@@ -582,24 +576,24 @@ class CostingSec extends Component {
                 <form className="sec-costing__form">
                     <div className="sec-costing__steps">
                         <Slider ref={slider => (this.slider = slider)} {...sliderOptions} >
-                            <CostingStep01 currentMileage={this.state.currentMileage}
-                                           car={this.state.model}
-                                           currentEquipment={this.state.currentEquipment}
-                                           setEquipment={this.setEquipment}
-                                           setStep={this.setStep}
-                                           setCurrentMileageHandler={this.setCurrentMileageHandler}
-                            />
-                            <CostingStep02 currentEquipment={this.state.currentEquipment}
-                                           currentMileage={this.state.currentMileage}
-                                           mileageRepeat={this.state.mileageRepeat}
-                                           selected={this.state.selected}
-                                           setStep={this.setStep}
-                                           togglePart={this.togglePart}
-                                           toggleWork={this.toggleWork}
-                                           worksCost={this.state.worksCost}
-                                           recommendationsCost={this.state.recommendationsCost}
+                            {/*<CostingStep01 currentMileage={this.state.currentMileage}*/}
+                            {/*               car={this.state.model}*/}
+                            {/*               currentEquipment={this.state.currentEquipment}*/}
+                            {/*               setEquipment={this.setEquipment}*/}
+                            {/*               setStep={this.setStep}*/}
+                            {/*               setCurrentMileageHandler={this.setCurrentMileageHandler}*/}
+                            {/*/>*/}
+                            {/*<CostingStep02 currentEquipment={this.state.currentEquipment}*/}
+                            {/*               currentMileage={this.state.currentMileage}*/}
+                            {/*               mileageRepeat={this.state.mileageRepeat}*/}
+                            {/*               selected={this.state.selected}*/}
+                            {/*               setStep={this.setStep}*/}
+                            {/*               togglePart={this.togglePart}*/}
+                            {/*               toggleWork={this.toggleWork}*/}
+                            {/*               worksCost={this.state.worksCost}*/}
+                            {/*               recommendationsCost={this.state.recommendationsCost}*/}
 
-                            />
+                            {/*/>*/}
                             <CostingStep03 setStep={this.setStep}
                                            totalCost={this.state.worksCost + this.state.recommendationsCost}
                                            date={this.state.date}
