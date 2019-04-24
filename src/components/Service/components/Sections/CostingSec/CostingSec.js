@@ -391,15 +391,15 @@ class CostingStep03 extends Component {
                 value: true,
                 isValid: true,
                 validation: {
-                    checked:true,
+                    checked: true,
                 }
             }
 
         }
     }
-
     validateControl = (value, validation) => {
         let isValid = true
+        console.log(value, validation)
         if (validation.required) {
             isValid = value.trim() !== "" && isValid
         }
@@ -409,13 +409,15 @@ class CostingStep03 extends Component {
         if (validation.phone) {
             isValid = value.indexOf('_') < 0 && isValid
         }
+        if (validation.checked){
+            isValid = value === validation.checked
+        }
         return isValid
     }
     validateForm = (controls) => {
         let isValid = true
         for (let control in controls) {
-            isValid = controls[control].isValid && isValid
-            console.log(controls[control].isValid, isValid)
+            isValid = isValid && controls[control].isValid
         }
         return isValid
     }
@@ -727,7 +729,7 @@ class CostingSec extends Component {
                                 <div className="container">
                                     <div className="costing__step-wrap">
                                         <div className="cg-status">
-                                            <i className="cg-status__icon"></i>
+                                            <i className="cg-status__icon"/>
                                             <h4 className="cg-status__title">Ваша заявка успешно отправлена!</h4>
                                             <div className="cg-status__note">
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -745,7 +747,7 @@ class CostingSec extends Component {
                                                 </li>
                                                 <li className="cg-status__data">
                                                     <span className="cg-status__data-par">Ваше имя и отчество</span>
-                                                    <span className="cg-status__data-val"></span>
+                                                    <span className="cg-status__data-val"/>
                                                 </li>
                                             </ul>
                                         </div>
