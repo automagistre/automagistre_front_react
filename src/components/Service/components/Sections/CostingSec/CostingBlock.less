@@ -468,7 +468,12 @@
             margin-bottom: 0;
         }
 
-        &_name { background-image: data-uri("@{img-dir}icons/icon_order-user_gray.svg") }
+        &_name {
+            background-image: data-uri("@{img-dir}icons/icon_order-user_gray.svg");
+            .cg-order__input {
+                text-transform: capitalize;
+            }
+        }
         &_phon { background-image: data-uri("@{img-dir}icons/icon_order-phon_gray.svg") }
         &_chat { background-image: data-uri("@{img-dir}icons/icon_order-chat_gray.svg") }
     }
@@ -507,6 +512,9 @@
 
         &:hover {
             box-shadow: 0 11px 30px -15px rgba(183,188,192,.5);
+        }
+        &[data-valid='false'] {
+            box-shadow: 0 11px 30px -15px red;
         }
     }
 

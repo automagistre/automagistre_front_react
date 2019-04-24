@@ -4,7 +4,8 @@ import Slider from 'react-slick'
 import Calendar from 'react-calendar'
 import './CostingBlock.less'
 import './CostingSec.less'
-
+import is from 'is_js'
+import MaskedInput from 'react-text-mask'
 
 const model = {
     id: 1,
@@ -346,74 +347,196 @@ const CostingStep02 = props => {
     )
 }
 
-const CostingStep03 = props => {
-    let date = `${props.date.getDate()}.${props.date.getMonth()+1}.${props.date.getFullYear()} `
-    return (
-        <div className="costing__step costing__step_03" id="costing-step_03">
-            <div className="container">
-                <div className="costing__step-wrap">
-                    <h4 className="costing__step-title">Теперь вы можете легко оформить заявку:</h4>
-                    <div className="costing__row">
-                        <div className="costing__col-half">
-                            <div className="cg-order costing__unit">
-                                <div className="cg-order__head">
-                                    <h4 className="costing__title cg-order__title">
-                                        Выберите удобную дату:
-                                    </h4>
-                                    <div className="cg-order__date" id="cg-order-date">
-                                        {date}
-                                    </div>
-                                </div>
-                                <div className="cg-order__body">
-                                    <Calendar className="cg-calendar"
-                                              minDate={new Date()}
-                                              locale="ru-RU"
-                                              prev2Label={null}
-                                              next2Label={null}
-                                    />
+class CostingStep03 extends Component {
+    state = {
+        isFormValid: false,
+        formControls: {
+            name: {
+                value: '',
+                pic: 'name',
+                placeholder: 'Ваше имя и отчество',
+                mask:[/\w/],
+                isTouched:false,
+                isValid: false,
+                validation: {
+                    required:true,
+                }
+            },
+            email:{
+                value:'',
+                valid:false,
+                pic: 'chat',
+                placeholder: 'e-mail',
+                // mask:[],
+                isTouched:false,
+                isValid: false,
+                validation: {
+                    required:true,
+                    email: true
+                }
+            },
+            phone:{
+                value: '',
+                pic: 'phon',
+                placeholder: 'Телефон',
+                mask: ['+', '7', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+                isTouched:false,
+                isValid: false,
+                validation: {
+                    required:true,
+                    phone: true
+                }
+            },
+            license:{
+                value: true,
+                isValid: true,
+                validation: {
+                    checked:true,
+                }
+            }
 
+        }
+    }
+
+    validateControl = (value, validation) => {
+        let isValid = true
+        if (validation.required) {
+            isValid = value.trim() !== "" && isValid
+        }
+        if (validation.email) {
+            isValid = is.email(value) && isValid
+        }
+        if (validation.phone) {
+            isValid = value.indexOf('_') < 0 && isValid
+        }
+        return isValid
+    }
+    validateForm = (controls) => {
+        let isValid = true
+        for (let control in controls) {
+            isValid = controls[control].isValid && isValid
+            console.log(controls[control].isValid, isValid)
+        }
+        return isValid
+    }
+
+    onChangeHandler = (event, controlName) => {
+        const formControls = {...this.state.formControls}
+        const control = {...formControls[controlName]}
+        control.isTouched = true
+        controlName === 'license' ? control.value = event.target.checked : control.value = event.target.value
+        if (controlName === 'name')
+            control.value = control.value.replace(/(?:^|\s)\S/g, l => l.toUpperCase())
+        control.isValid = this.validateControl(control.value, control.validation)
+        formControls[controlName] = control
+        let isFormValid = this.validateForm(formControls)
+        this.setState({formControls, isFormValid})
+    }
+    completeForm = () => {
+        if (this.state.isFormValid)
+            this.props.setStep(3, 4)
+    }
+
+    render() {
+        let date = `${this.props.date.getDate('dd')}.${this.props.date.getMonth() + 1}.${this.props.date.getFullYear()} `
+        let nextCls
+        this.state.isFormValid ? nextCls = '' : nextCls = 'btn_gray'
+        return (
+            <div className="costing__step costing__step_03" id="costing-step_03">
+                <div className="container">
+                    <div className="costing__step-wrap">
+                        <h4 className="costing__step-title">Теперь вы можете легко оформить заявку:</h4>
+                        <div className="costing__row">
+                            <div className="costing__col-half">
+                                <div className="cg-order costing__unit">
+                                    <div className="cg-order__head">
+                                        <h4 className="costing__title cg-order__title">
+                                            Выберите удобную дату:
+                                        </h4>
+                                        <div className="cg-order__date" id="cg-order-date">
+                                            {date}
+                                        </div>
+                                    </div>
+                                    <div className="cg-order__body">
+                                        <Calendar className="cg-calendar"
+                                                  minDate={new Date()}
+                                                  locale="ru-RU"
+                                                  prev2Label={null}
+                                                  next2Label={null}
+                                                  onChange={(date) => this.props.changeDateHandler(date)}
+                                        />
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="costing__col-half">
-                            <div className="cg-order costing__unit">
-                                <div className="cg-order__head cg-order__head_red">
-                                    <h4 className="costing__title cg-order__title">Итого:</h4>
-                                    <div className="cg-order__cost">{props.totalCost} ₽</div>
-                                </div>
-                                <div className="cg-order__body">
-                                    <div className="cg-order__line cg-order__line_name">
-                                        <input className="cg-order__input" type="text"
-                                               placeholder="Ваше имя и отчество"/>
+                            <div className="costing__col-half">
+                                <div className="cg-order costing__unit">
+                                    <div className="cg-order__head cg-order__head_red">
+                                        <h4 className="costing__title cg-order__title">Итого:</h4>
+                                        <div className="cg-order__cost">{ this.props.totalCost } ₽</div>
                                     </div>
-                                    <div className="cg-order__line cg-order__line_phon">
-                                        <input className="cg-order__input cg-order__input_phone"
-                                               type="text" placeholder="Телефон"/>
-                                    </div>
-                                    <div className="cg-order__line cg-order__line_chat">
-                                        <input className="cg-order__input cg-order__input_info"
-                                               type="text" placeholder="Дополнительная информация"/>
-                                    </div>
-                                    <div className="cg-order__line">
-                                        <label className="cg-order__check">
-                                            <input type="checkbox"/>
-                                            <span>Я принимаю <a href="#" target="_blank">условия передачи информации</a>
-                                                  и согласен с <a href="#" target="_blank">правилами оферты</a>
+                                    <div className="cg-order__body">
+                                        {Object.keys(this.state.formControls).map((controlName, key) => {
+                                            if (controlName === 'license')
+                                                return null
+                                            const control = this.state.formControls[controlName]
+                                            if (controlName === 'phone') {
+                                                return (
+                                                    <div className={`cg-order__line cg-order__line_${control.pic}`}
+                                                         key={controlName+key}>
+                                                        <MaskedInput className="cg-order__input"
+                                                                     mask={control.mask}
+                                                                     guide={true}
+                                                                     keepCharPositions={true}
+                                                                     showMask={true}
+                                                                     type="text"
+                                                                     placeholder={control.placeholder}
+                                                                     data-valid={control.isValid || !control.isTouched}
+                                                                     onChange={e => this.onChangeHandler(e, controlName)}
+                                                        />
+                                                    </div>
+                                                )
+                                            }
+                                            return (
+                                                <div className={`cg-order__line cg-order__line_${control.pic}`} key={controlName+key}>
+                                                    <input className="cg-order__input"
+                                                           type="text"
+                                                           placeholder={control.placeholder}
+                                                           data-valid={control.isValid || !control.isTouched}
+                                                           onChange={e => this.onChangeHandler(e, controlName)}/>
+                                                </div>
+                                            )
+                                        })}
+                                        <div className="cg-order__line">
+                                            <label className="cg-order__check">
+                                                <input type="checkbox"
+                                                       checked={this.state.formControls.license.value}
+                                                       onChange={
+                                                           e => this.onChangeHandler(e, 'license')
+                                                       }
+                                                />
+                                                <span>Я принимаю
+                                                    <a href="#" target="_blank">условия передачи информации</a>
+                                                      и согласен с
+                                                    <a href="#" target="_blank">правилами оферты</a>
                                             </span>
-                                        </label>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="costing__step-btm costing__step-btm_sb">
-                    <a className="btn costing__btn" onClick={() => props.setStep(3, 2)}>Назад</a>
-                    <a className="btn costing__btn" onClick={() => props.setStep(3, 4)}>Записаться на обслуживание</a>
+                    <div className="costing__step-btm costing__step-btm_sb">
+                        <a className="btn costing__btn" onClick={() => this.props.setStep(3, 2)}>Назад</a>
+                        <a className={"btn costing__btn " + nextCls} onClick={this.completeForm}>
+                            Записаться на обслуживание
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 class CostingSec extends Component {
@@ -523,7 +646,7 @@ class CostingSec extends Component {
         }
     )}
     changeDateHandler = date => {
-        console.log(date)
+        this.setState({date})
     }
     calculateCost = (selected, equipment=this.state.currentEquipment) => {
         let worksCost, recommendationsCost
@@ -597,6 +720,7 @@ class CostingSec extends Component {
                             <CostingStep03 setStep={this.setStep}
                                            totalCost={this.state.worksCost + this.state.recommendationsCost}
                                            date={this.state.date}
+                                           changeDateHandler={this.changeDateHandler}
 
                             />
                             <div className="costing__step costing__step_04" id="costing-step_04">
