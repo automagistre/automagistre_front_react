@@ -421,7 +421,6 @@ class CostingStep03 extends Component {
         }
         return isValid
     }
-
     onChangeHandler = (event, controlName) => {
         const formControls = {...this.state.formControls}
         const control = {...formControls[controlName]}
@@ -434,11 +433,18 @@ class CostingStep03 extends Component {
         let isFormValid = this.validateForm(formControls)
         this.setState({formControls, isFormValid})
     }
-    completeForm = () => {
-        if (this.state.isFormValid)
-            this.props.setStep(3, 4)
+    finishForm = () => {
+        if (this.state.isFormValid) {
+            const controls = this.state.formControls
+            const user = {
+                name: controls.name.value,
+                email: controls.email.value,
+                phone: controls.phone.value,
+            }
+            this.props.finishForm(user)
+        }
+        return null
     }
-
     render() {
         let date = `${this.props.date.getDate('dd')}.${this.props.date.getMonth() + 1}.${this.props.date.getFullYear()} `
         let nextCls
@@ -531,7 +537,7 @@ class CostingStep03 extends Component {
                     </div>
                     <div className="costing__step-btm costing__step-btm_sb">
                         <a className="btn costing__btn" onClick={() => this.props.setStep(3, 2)}>Назад</a>
-                        <a className={"btn costing__btn " + nextCls} onClick={this.completeForm}>
+                        <a className={"btn costing__btn " + nextCls} onClick={this.finishForm}>
                             Записаться на обслуживание
                         </a>
                     </div>
@@ -539,6 +545,43 @@ class CostingStep03 extends Component {
             </div>
         )
     }
+}
+
+const CostingStep04 = props => {
+    return (
+        <div className="costing__step costing__step_04" id="costing-step_04">
+            <div className="container">
+                <div className="costing__step-wrap">
+                    <div className="cg-status">
+                        <i className="cg-status__icon"/>
+                        <h4 className="cg-status__title">Ваша заявка успешно отправлена!</h4>
+                        <div className="cg-status__note">
+                            Вы отправили заявку на ТО{props.currentMileage}<br/>
+                            Ближайшее время с вами свяжется оператор для уточнения информации.
+                        </div>
+                        <ul className="cg-status__list">
+                            <li className="cg-status__data">
+                                <span className="cg-status__data-par">Автомобиль</span>
+                                <span className="cg-status__data-val">{props.model}</span>
+                            </li>
+                            <li className="cg-status__data">
+                                <span className="cg-status__data-par">Дата</span>
+                                <span className="cg-status__data-val">{props.date}</span>
+                            </li>
+                            <li className="cg-status__data">
+                                <span className="cg-status__data-par">Ваше имя и отчество</span>
+                                <span className="cg-status__data-val">{props.name}</span>
+                            </li>
+                            <li className="cg-status__data">
+                                <span className="cg-status__data-par">Телефон</span>
+                                <span className="cg-status__data-val">{props.phone}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 class CostingSec extends Component {
@@ -562,7 +605,12 @@ class CostingSec extends Component {
             selected,
             worksCost: 0,
             recommendationsCost: 0,
-            date: 0
+            date: 0,
+            user: {
+                name:'',
+                email:'',
+                phone:''
+            }
         }
     }
     componentWillMount() {
@@ -570,7 +618,6 @@ class CostingSec extends Component {
         const date = new Date()
         this.setState({worksCost, recommendationsCost, date})
     }
-
     generateSelects = (equipment, repeat) => {
         const selected = new Map()
         for (let i in equipment.works) {
@@ -669,6 +716,10 @@ class CostingSec extends Component {
         }
         return [worksCost, recommendationsCost]
     }
+    finishForm = user => {
+        this.setState({user})
+        this.setStep(3, 4)
+    }
     render() {
         const sliderOptions = {
             className: 'costing',
@@ -701,59 +752,38 @@ class CostingSec extends Component {
                 <form className="sec-costing__form">
                     <div className="sec-costing__steps">
                         <Slider ref={slider => (this.slider = slider)} {...sliderOptions} >
-                            {/*<CostingStep01 currentMileage={this.state.currentMileage}*/}
-                            {/*               car={this.state.model}*/}
-                            {/*               currentEquipment={this.state.currentEquipment}*/}
-                            {/*               setEquipment={this.setEquipment}*/}
-                            {/*               setStep={this.setStep}*/}
-                            {/*               setCurrentMileageHandler={this.setCurrentMileageHandler}*/}
-                            {/*/>*/}
-                            {/*<CostingStep02 currentEquipment={this.state.currentEquipment}*/}
-                            {/*               currentMileage={this.state.currentMileage}*/}
-                            {/*               mileageRepeat={this.state.mileageRepeat}*/}
-                            {/*               selected={this.state.selected}*/}
-                            {/*               setStep={this.setStep}*/}
-                            {/*               togglePart={this.togglePart}*/}
-                            {/*               toggleWork={this.toggleWork}*/}
-                            {/*               worksCost={this.state.worksCost}*/}
-                            {/*               recommendationsCost={this.state.recommendationsCost}*/}
+                            <CostingStep01 currentMileage={this.state.currentMileage}
+                                           car={this.state.model}
+                                           currentEquipment={this.state.currentEquipment}
+                                           setEquipment={this.setEquipment}
+                                           setStep={this.setStep}
+                                           setCurrentMileageHandler={this.setCurrentMileageHandler}
+                            />
+                            <CostingStep02 currentEquipment={this.state.currentEquipment}
+                                           currentMileage={this.state.currentMileage}
+                                           mileageRepeat={this.state.mileageRepeat}
+                                           selected={this.state.selected}
+                                           setStep={this.setStep}
+                                           togglePart={this.togglePart}
+                                           toggleWork={this.toggleWork}
+                                           worksCost={this.state.worksCost}
+                                           recommendationsCost={this.state.recommendationsCost}
 
-                            {/*/>*/}
+                            />
                             <CostingStep03 setStep={this.setStep}
                                            totalCost={this.state.worksCost + this.state.recommendationsCost}
                                            date={this.state.date}
                                            changeDateHandler={this.changeDateHandler}
+                                           finishForm={this.finishForm}
 
                             />
-                            <div className="costing__step costing__step_04" id="costing-step_04">
-                                <div className="container">
-                                    <div className="costing__step-wrap">
-                                        <div className="cg-status">
-                                            <i className="cg-status__icon"/>
-                                            <h4 className="cg-status__title">Ваша заявка успешно отправлена!</h4>
-                                            <div className="cg-status__note">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                Atque ratione rem ullam velit! At debitis enim eum, laboriosam natus
-                                                totam
-                                            </div>
-                                            <ul className="cg-status__list">
-                                                <li className="cg-status__data">
-                                                    <span className="cg-status__data-par">Марка авто</span>
-                                                    <span className="cg-status__data-val">Altima купе</span>
-                                                </li>
-                                                <li className="cg-status__data">
-                                                    <span className="cg-status__data-par">Дата</span>
-                                                    <span className="cg-status__data-val">12.02.2018</span>
-                                                </li>
-                                                <li className="cg-status__data">
-                                                    <span className="cg-status__data-par">Ваше имя и отчество</span>
-                                                    <span className="cg-status__data-val"/>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <CostingStep04 model={`${model.manufacture} ${model.name}(${model.model})`}
+                                           date={`${this.state.date.getDate('dd')}.${this.state.date.getMonth() + 1}.${this.state.date.getFullYear()}`}
+                                           name={this.state.user.name}
+                                           phone={this.state.user.phone}
+                                           currentMileage={this.state.currentMileage}
+
+                            />
                         </Slider>
                     </div>
                 </form>
