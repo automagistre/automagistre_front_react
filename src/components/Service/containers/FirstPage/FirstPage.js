@@ -6,12 +6,12 @@ import logo from '../../../../img/logo_magistr_gray.svg'
 
 class FirstPage extends Component {
     state = {
-        friezeChoice: false
+        frieze: false
     }
 
     friezeChoiceToggle = () => {
         this.setState({
-            friezeChoice: !this.state.friezeChoice
+            frieze: !this.state.frieze
         })
     }
 
@@ -22,7 +22,7 @@ class FirstPage extends Component {
                     <img className="sec-start__logo" src={logo} alt="Автомагистр" />
                         <div className="sec-start__note">Клубный автосервис и магазин запчастей</div>
                 </div>
-                <SelectModel changeStep={this.friezeChoiceToggle} frieze={this.state.friezeChoice} />
+                <SelectModel friezeChoiceToggle={this.friezeChoiceToggle} frieze={this.state.frieze} />
             </section>
         );
     }

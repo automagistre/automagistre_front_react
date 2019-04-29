@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-
 import './SelectModel.less'
 
 
@@ -7,6 +6,9 @@ import Slider from 'react-slick'
 import {carManufactures} from "../../../vars/manufactures";
 import {services} from "../../../vars/company";
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
+import {applyMiddleware as dispatch} from "redux";
+import {setManufacture} from "../../../store/actions/serviceActions";
 
 function CustomArrow(props) {
     const { className, onClick } = props;
@@ -21,13 +23,17 @@ class SelectModel extends Component {
 
     renderServices = links => links.map((value , key) =>{
         return (
-            <NavLink to={value.url} className="btn btn_shmatn sec-start__btn" style={ {display: "block", margin: "40px 0"}} key={key} href="#">
+            <NavLink to={`${value.url}/${this.props.manufacture}`} className="btn btn_shmatn sec-start__btn" style={ {display: "block", margin: "40px 0"}} key={key} href="#">
                 <i className={value.icon} />
                 {value.name}
             </NavLink>
         )
     } )
+    setManufacture = manufacture => {
+        this.props.setManufacture(manufacture)
+        this.props.friezeChoiceToggle()
 
+    }
     renderCarBlock = cars => cars.map((value, key) => {
         let cls = value.cls
         return (
@@ -41,7 +47,7 @@ class SelectModel extends Component {
                     </div>
                 </div>
                 <div className="sec-start__slide-btm">
-                    <a className="btn btn_big sec-start__slide-btn" onClick={this.props.changeStep} role="button">Выбрать {value.name}</a>
+                    <button className="btn btn_big sec-start__slide-btn" onClick={()=> this.setManufacture(value.name)}>Выбрать {value.name}</button>
                 </div>
             </div>
         )
@@ -51,7 +57,7 @@ class SelectModel extends Component {
         let brands = cars.map((value, key) => {
             let cls = "sec-start__nav-link icon-" + value.cls
             return (
-                <a className={cls} key={key} role="button" onClick={ () => this.slider.slickGoTo(key)}/>
+                <button className={cls} key={key} onClick={ () => this.slider.slickGoTo(key)}/>
             )
         })
         brands.push(
@@ -87,10 +93,10 @@ class SelectModel extends Component {
         return (
                 <div className="sec-start__body">
                         <div className={cls}>
-                        <a className="btn btn_gray btn_arrow-lt sec-start__back" role="button"
-                           onClick={this.props.changeStep}>
+                        <button className="btn btn_gray btn_arrow-lt sec-start__back"
+                           onClick={this.props.friezeChoiceToggle}>
                             Назад
-                        </a>
+                        </button>
                         <h1 className="sec-start__title">Выберите <br /> интересующее направление:</h1>
                         <Slider  {...slickOptions}
                                 ref={slider => (this.slider = slider)}>
@@ -105,4 +111,16 @@ class SelectModel extends Component {
     }
 }
 
-export default SelectModel
+function mapStateToProps(store) {
+    return {
+        manufacture: store.service.manufacture
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setManufacture: manufacture => dispatch(setManufacture(manufacture))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectModel)
