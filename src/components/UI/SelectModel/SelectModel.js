@@ -1,13 +1,10 @@
 import React, {Component} from 'react'
 import './SelectModel.less'
 
-
 import Slider from 'react-slick'
-import {carManufactures} from "../../../vars/manufactures";
 import {services} from "../../../vars/company";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {applyMiddleware as dispatch} from "redux";
 import {setManufacture} from "../../../store/actions/serviceActions";
 
 function CustomArrow(props) {
@@ -18,7 +15,7 @@ function CustomArrow(props) {
 }
 
 class SelectModel extends Component {
-    carManufactures = carManufactures
+    carManufactures = this.props.manufactures
     services = services
 
     renderServices = links => links.map((value , key) =>{
@@ -113,6 +110,7 @@ class SelectModel extends Component {
 
 function mapStateToProps(store) {
     return {
+        manufactures: store.service.manufactures,
         manufacture: store.service.manufacture
     }
 }

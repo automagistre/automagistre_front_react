@@ -1,6 +1,9 @@
 import {SET_MANUFACTURE} from "../actions/actionsTypes";
+import {carManufactures} from "../../vars/manufactures";
+
 
 const initialState = {
+    manufactures: carManufactures,
     manufacture: ''
 }
 
