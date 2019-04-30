@@ -80,7 +80,6 @@ class Service extends Component {
         }
     }
     render() {
-        console.log(this.props)
         return (
             <React.Fragment>
                 <Header/>

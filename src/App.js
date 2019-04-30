@@ -16,7 +16,7 @@ class App extends Component {
         <Layout >
           <Switch>
             <Route path="/service/:manufacture/" component={Service}/>
-            <Route path="/" exac component={FirstPage}/>
+            <Route path="/" exact component={FirstPage}/>
           </Switch>
         </Layout>
     );

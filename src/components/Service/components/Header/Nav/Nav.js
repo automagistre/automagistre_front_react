@@ -1,27 +1,57 @@
 import React from 'react';
 import '../Header.less'
-import {carManufactures} from '../../../../../vars/manufactures'
 
-class Nav extends React.Component {
-    renderCarLinks = links => links.map((value, key) => {
-        return (
-            <a key={key} className="sh-mob__link" href="#">Клубный автосервис: {value.name}</a>
-        )
-    });
+import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
+import {setManufacture} from "../../../../../store/actions/serviceActions";
 
-    render () {
-        return (
-            <div className="sh-mob__drop"  id="mob-drop">
-                <nav className="sh-mob__menu">
-                    <a className="sh-mob__link" href="#">Автосервис в Москве</a>
-                    <a className="sh-mob__link" href="#">Магазин запчастей</a>
-                    <a className="sh-mob__link" href="#">Мой гараж</a>
-                    <a className="sh-mob__link" href="#">Контакты</a>
-                    { this.renderCarLinks(carManufactures) }
-                </nav>
-            </div>
-        )
+function Nav(props) {
+    const links = props.manufactures
+    return (
+        <div className="sh-mob__drop" id="mob-drop">
+            <nav className="sh-mob__menu">
+                <NavLink className="sh-mob__link" to={'/service/' + props.manufacture}
+                         onClick={props.toggleMenuHandler}>Автосервис в Москве
+                </NavLink>
+                <NavLink className="sh-mob__link" to={'/market/' + props.manufacture}
+                         onClick={props.toggleMenuHandler}>Магазин запчастей
+                </NavLink>
+                <NavLink className="sh-mob__link" to="/garage"
+                         onClick={props.toggleMenuHandler}>Мой гараж
+                </NavLink>
+                <NavLink className="sh-mob__link" to="/contacts"
+                         onClick={props.toggleMenuHandler}>Контакты
+                </NavLink>
+                {links.map((value, key) => {
+                    return (
+                        <NavLink key={key}
+                                 className="sh-mob__link"
+                                 to={'/service/' + value.name.toLowerCase()}
+                                 onClick={()=> {
+                                     props.setManufacture(value.name)
+                                     props.toggleMenuHandler()
+                                 }}
+                        >
+                            Клубный автосервис: {value.name}
+                        </NavLink>
+                    )})
+                }
+            </nav>
+        </div>
+    )
+}
+
+function mapStateToProps(state) {
+    return {
+        manufacture: state.service.manufacture,
+        manufactures: state.service.manufactures
     }
 }
 
-export default Nav;
+function mapDispatchToProps(dispatch) {
+    return {
+        setManufacture: manufacture => dispatch(setManufacture(manufacture))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

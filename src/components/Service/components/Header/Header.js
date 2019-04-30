@@ -11,11 +11,13 @@ class Header extends React.Component {
 
     lastScrollY = 0
     navBarHeight = 0
-
-    state = {
-        DropMenuIsOpen: false,
-        isScrolled: false,
-        navDown: true
+    constructor(props) {
+        super(props)
+        this.state = {
+            DropMenuIsOpen: false,
+            isScrolled: false,
+            navDown: true
+        }
     }
 
     componentDidMount() {
@@ -79,7 +81,7 @@ class Header extends React.Component {
                         <MobMenu open={this.state.DropMenuIsOpen} toggleMenuHandler={this.toggleMenuHandler}/>
                     </div>
                 </div>
-                <Nav />
+                <Nav toggleMenuHandler={this.toggleMenuHandler}/>
             </header>
         )
     }
