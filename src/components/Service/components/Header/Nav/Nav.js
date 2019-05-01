@@ -3,7 +3,6 @@ import '../Header.less'
 
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {setManufacture} from "../../../../../store/actions/serviceActions";
 
 const Nav = (props) => {
     const links = props.manufactures
@@ -27,10 +26,7 @@ const Nav = (props) => {
                         <NavLink key={key}
                                  className="sh-mob__link"
                                  to={'/service/' + value.name.toLowerCase()}
-                                 onClick={()=> {
-                                     // props.setManufacture(value.name)
-                                     props.toggleMenuHandler()
-                                 }}
+                                 onClick={()=> props.toggleMenuHandler()}
                         >
                             Клубный автосервис: {value.name}
                         </NavLink>

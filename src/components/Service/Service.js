@@ -12,8 +12,7 @@ import 'malihu-custom-scrollbar-plugin'
 import AboutSec from "./components/Sections/AboutSec/AboutSec";
 
 import CostingSec from "./components/Sections/CostingSec/CostingSec";
-import {connect} from "react-redux";
-import {setManufacture} from "../../store/actions/serviceActions";
+import {connect} from "react-redux"
 
 let ScrollLink = Scroll.Link
 let ScrollElement = Scroll.Element
