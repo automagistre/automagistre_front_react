@@ -85,10 +85,5 @@ function mapStateToProps(state) {
         manufactures: state.service.manufactures
     }
 }
-function mapDispatchToProps(dispatch) {
-    return {
-        setManufacture: manufacture => dispatch(setManufacture(manufacture))
 
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Service)
+export default connect(mapStateToProps)(Service)

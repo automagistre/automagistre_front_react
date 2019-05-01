@@ -8,12 +8,16 @@ import {connect} from "react-redux";
 const links = services
 
 const MenuLink = props => {
+    console.log(props)
     let isActive = ''
     if(props.serviceType === props.link.url)
         isActive = 'is-active'
     return (
-        <li className={"sh-switch__item " + isActive}>
-            <Link className="sh-switch__link" to={`/${props.link.url}/${props.manufacture.toLowerCase()}`}>{ props.link.name }</Link>
+        <li className="sh-switch__item">
+            <Link className={"sh-switch__link " + isActive}
+                  to={`/${props.link.url}/${props.manufacture.toLowerCase()}`}>
+                { props.link.name }
+            </Link>
         </li>
     )
 }

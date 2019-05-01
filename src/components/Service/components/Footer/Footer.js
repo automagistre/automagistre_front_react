@@ -3,6 +3,7 @@ import './Footer.less'
 import SpaceWellLogo from '../../../../img/logo_space-well_red.svg'
 import MagistrLogoDark from '../../../../img/logo_magistr_dark.svg'
 import DropMenu from "../DropMenu/DropMenu";
+import {Link} from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -12,14 +13,14 @@ const Footer = () => {
                     <div className="sf-top__row">
                         <div className="sf-top__col-lt">
                             <div className="sf-logo">
-                                <img className="sf-logo__img" src={MagistrLogoDark} alt="Атомагистр" />
-                                    <a className="sf-logo__link" href="/" />
+                                <img className="sf-logo__img" src={MagistrLogoDark} alt="Автомагистр" />
+                                    {/*<a className="sf-logo__link" href="/" />*/}
                             </div>
                             <DropMenu place = 'Footer' />
                         </div>
                         <div className="sf-top__col-rt">
                             <nav className="sf-nav">
-                                <a className="sf-nav__link is-active" href="#">Сервис в Москве</a>
+                                <Link className="sf-nav__link is-active" to={'/garage/'}>Сервис в Москве</Link>
                                 <a className="sf-nav__link" href="#">Магазин запчастей</a>
                                 <a className="sf-nav__link" href="#">Корпоративным клиентам</a>
                                 <a className="sf-nav__link" href="#">Мой гараж</a>

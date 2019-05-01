@@ -10,7 +10,7 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 
 const Logo = (props) => {
-    const url = '/service/' + props.manufacture
+    const url = `/${props.serviceType}/${props.manufacture}`
     return props.mob ? (
         <div className="sh-mob__col-lt">
             <NavLink className="sh-mob__logo" to={url}>
@@ -35,7 +35,8 @@ const Logo = (props) => {
 
 function mapStateToProps(state) {
     return {
-        manufacture: state.service.manufacture
+        manufacture: state.service.manufacture,
+        serviceType: state.service.serviceType
     }
 }
 export default connect(mapStateToProps)(Logo)
