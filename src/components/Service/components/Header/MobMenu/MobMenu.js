@@ -2,6 +2,7 @@ import React from 'react';
 import '../Header.less'
 import './MobMenu.less'
 import {companyContacts} from '../../../../../vars/company'
+import {Link} from "react-router-dom";
 
 const MobMenu = (props) => {
     let cls = "mobmenu-btn sh-mob__menu-btn"
@@ -10,12 +11,12 @@ const MobMenu = (props) => {
     }
     return (
         <div className="sh-mob__col-rt">
-            <a className="sh-mob__phone" href={`tel:${companyContacts.phoneLink}`} />
-            <a className={cls} onClick={props.toggleMenuHandler} >
+            <Link className="sh-mob__phone" to={`tel:${companyContacts.phoneLink}`} />
+            <button className={cls} onClick={props.toggleMenuHandler} >
                 <span className="_top" />
                 <span className="_middle" />
                 <span className="_bottom" />
-            </a>
+            </button>
         </div>
     )
 };
