@@ -4,7 +4,6 @@ import './MobMenu.less'
 import {companyContacts} from '../../../../../vars/company'
 
 const MobMenu = (props) => {
-    console.log(props)
     let cls = "mobmenu-btn sh-mob__menu-btn"
     if (props.open) {
         cls += " is-open"

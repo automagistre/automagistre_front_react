@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {setManufacture} from "../../../../../store/actions/serviceActions";
 
-function Nav(props) {
+const Nav = (props) => {
     const links = props.manufactures
     return (
         <div className="sh-mob__drop" id="mob-drop">
@@ -28,7 +28,7 @@ function Nav(props) {
                                  className="sh-mob__link"
                                  to={'/service/' + value.name.toLowerCase()}
                                  onClick={()=> {
-                                     props.setManufacture(value.name)
+                                     // props.setManufacture(value.name)
                                      props.toggleMenuHandler()
                                  }}
                         >

@@ -1,1 +1,2 @@
 export const SET_MANUFACTURE = 'SET_MANUFACTURE'
+export const SET_SERVICE = 'SET_SERVICE'

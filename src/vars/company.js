@@ -1,4 +1,5 @@
-
+import Service from "../components/Service/Service";
+import React from 'react'
 export const companyNameRu = 'Автомагистр';
 
 export const companyContacts = {
@@ -24,13 +25,17 @@ export const services = [
         name: 'Автосервис в москве',
         link: 'service',
         icon: 'icon-gear',
-        url:  'service'
+        url:  'service',
+        visible: true,
+        component: props => <Service {...props}/>
     },
     {
         name: 'Магазин запчастей',
         link: 'market',
         icon: 'icon-belt',
-        url:  'market'
+        url:  'market',
+        visible: true,
+        component: props => <Service {...props}/>
     }
 ]
 

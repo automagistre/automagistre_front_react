@@ -8,7 +8,6 @@ import Links from "./Links/Links";
 import MobMenu from "./MobMenu/MobMenu";
 
 class Header extends React.Component {
-
     lastScrollY = 0
     navBarHeight = 0
     constructor(props) {

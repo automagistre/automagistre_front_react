@@ -4,10 +4,6 @@ import './slick-slider.less'
 import './jquery.mCustomScrollbar.less'
 import * as Scroll from 'react-scroll'
 
-import Header from "./components/Header/Header";
-// import Main from "./containers/Main/Main";
-import Footer from "./components/Footer/Footer";
-// import SideBar from "../UI/Sidebar/Sidebar";
 import MakeAnAppointmentSec from "./components/Sections/MakeAnAppointmentSec/MakeAnAppointmentSec";
 
 import $ from 'jquery'
@@ -15,7 +11,6 @@ import 'malihu-custom-scrollbar-plugin'
 
 import AboutSec from "./components/Sections/AboutSec/AboutSec";
 
-import ScrollToTop from "../UI/ScrollToTop/ScrollToTop";
 import CostingSec from "./components/Sections/CostingSec/CostingSec";
 import {connect} from "react-redux";
 import {setManufacture} from "../../store/actions/serviceActions";
@@ -47,22 +42,7 @@ class Service extends Component {
             autoDraggerLength: false
         });
     }
-    componentWillMount() {
-        let flag = false
-        if (this.props.match.params.manufacture) {
-            const urlManufacture = this.props.match.params.manufacture
-            for (let manufacture of this.props.manufactures) {
-                if (urlManufacture.toLowerCase() === manufacture.name.toLowerCase()) {
-                    this.props.setManufacture(urlManufacture)
-                    flag = true
-                    break
-                }
-            }
-        }
-        if (!flag) {
-            this.props.history.push('/')
-        }
-    }
+
     componentDidMount() {
         let $scroll_X = $(".js-scroll-x");
         if ( $scroll_X.length ) {
@@ -81,22 +61,21 @@ class Service extends Component {
     }
     render() {
         return (
-            <React.Fragment>
-                <Header/>
-                {/*<Main/>*/}
-                <MakeAnAppointmentSec title='привет' >
-                    <ScrollLink className="btn sec-intro__btn" to="test2" smooth={true}  duration={500}>
-                        К прайс-листу
-                    </ScrollLink>
-                </MakeAnAppointmentSec>
 
-                <ScrollElement name="test2" />
-                <CostingSec />
-                <AboutSec />
-                {/*<SideBar/>*/}
-                <Footer/>
-                <ScrollToTop />
-            </React.Fragment>
+
+                    <React.Fragment>
+                        <MakeAnAppointmentSec title='привет' >
+                            <ScrollLink className="btn sec-intro__btn" to="test2" smooth={true}  duration={500}>
+                                К прайс-листу
+                            </ScrollLink>
+                        </MakeAnAppointmentSec>
+
+                        <ScrollElement name="test2" />
+                        <CostingSec />
+                        <AboutSec />
+                        {/*<SideBar/>*/}
+                    </React.Fragment>
+
         )
     }
 }

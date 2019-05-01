@@ -399,7 +399,6 @@ class CostingStep03 extends Component {
     }
     validateControl = (value, validation) => {
         let isValid = true
-        console.log(value, validation)
         if (validation.required) {
             isValid = value.trim() !== "" && isValid
         }
